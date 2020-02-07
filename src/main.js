@@ -1,8 +1,25 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-Vue.config.productionTip = false
+import createStore from './store';
+import createRouter from './router';
 
+Vue.config.productionTip = false;
+
+// Add fontawesome icons and initialize component
+library.add(faPlus);
+library.add(faMinus);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+const store = createStore();
+const router = createRouter();
+
+// Start App
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+  router,
+  store,
+}).$mount('#app');
