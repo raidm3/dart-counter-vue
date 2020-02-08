@@ -6,8 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import createStore from './store';
 import createRouter from './router';
+import wb from "./registerServiceWorker";
 
 Vue.config.productionTip = false;
+Vue.prototype.$workbox = wb;
 
 // Add fontawesome icons and initialize component
 library.add(faPlus);
