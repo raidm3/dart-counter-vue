@@ -5,15 +5,15 @@
                 v-if="numberOfPlayers <= 2"
                 class="col-12"
             >
-                <li
-                    v-for="player in players"
-                    :key="player.id"
-                    class="list-group-item d-flex justify-content-between align-items-center"
-                    :class="activePlayer.id == player.id ? 'active': ''"
-                >
-                    <b>{{ player.name }}</b>
-                    <span class="badge badge-warning">{{ player.score }}</span>
-                </li>
+                <ul class="list-group">
+                    <PlayersHeaderItem
+                        v-for="player in players"
+                        :key="player.id"
+                        :playerName="player.name"
+                        :playerScore="player.score"
+                        :isActive="activePlayer.id == player.id"
+                    />
+                </ul>
             </div>
             <div
                 v-else
@@ -21,23 +21,29 @@
                 :key="i"
                 :class="columnClass(i)"
             >
-                <li
-                    v-for="player in column"
-                    :key="player.id"
-                    class="list-group-item d-flex justify-content-between align-items-center"
-                    :class="activePlayer.id == player.id ? 'active': ''"
-                >
-                    <b>{{ player.name }}</b>
-                    <span class="badge badge-warning">{{ player.score }}</span>
-                </li>
+                <ul class="list-group">
+                    <PlayersHeaderItem
+                        v-for="player in column"
+                        :key="player.id"
+                        :playerName="player.name"
+                        :playerScore="player.score"
+                        :isActive="activePlayer.id == player.id"
+                    />
+                </ul>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import PlayersHeaderItem from './PlayersHeaderItem.vue';
+
 export default {
     name: 'PlayersHeader',
+
+    components: {
+        PlayersHeaderItem,
+    },
 
     computed: {
         players() {

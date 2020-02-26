@@ -1,7 +1,8 @@
 <template>
   <div class="card">
+    <!-- Game modes -->
     <div class="card-header">
-      <b>Choose a game mode</b>
+      <span class="h5">Choose a game mode</span>
     </div>
     <div class="card-body">
         <div class="list-group">
@@ -16,6 +17,43 @@
                 {{ mode.name }}
             </button>
         </div>
+    </div>
+
+    <!-- Game Options -->
+    <div class="card-header">
+      <span class="h5">Options</span>
+    </div>
+    <div class="card-body">
+        <div class="d-block">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input
+                    v-model="gameOptions"
+                    type="radio"
+                    id="singleOutRadioBtn"
+                    name="optionRadios"
+                    class="custom-control-input"
+                    value="singleOut"
+                    checked>
+                <label class="custom-control-label" for="singleOutRadioBtn">Single Out</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input
+                    v-model="gameOptions"
+                    type="radio"
+                    id="doubleOutRadioBtn"
+                    name="optionRadios"
+                    class="custom-control-input"
+                    value="doubleOut">
+                <label class="custom-control-label" for="doubleOutRadioBtn">Double Out</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player settings -->
+    <div class="card-header">
+        <span class="h5">Players</span>
+    </div>
+    <div class="card-body">
         <form class="mt-3">
             <div
                 v-for="(name, index) in playerNames"
@@ -51,6 +89,7 @@
             </div>
         </form>
     </div>
+
     <div class="card-footer">
         <button
             class="btn btn-primary btn-block"
@@ -77,6 +116,16 @@ export default {
             return this.$store.state.gameModes;
         },
 
+        gameOptions: {
+            get() {
+                return this.activeGameMode.option;
+            },
+
+            set(option) {
+                this.$store.dispatch('setGameOption', option);
+            }
+        },
+
         activeGameMode() {
             return this.$store.getters.activeGameMode;
         },
@@ -99,6 +148,7 @@ export default {
             this.$store.dispatch('startGame', {
                 names: this.playerNames,
                 mode: this.activeGameMode,
+                option: this.gameOptions,
             });
             this.$router.push({ name: 'play', params: { mode: this.activeGameModeName } });
         },

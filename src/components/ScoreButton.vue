@@ -2,9 +2,10 @@
     <button
         type="button"
         class="btn btn-block btn-outline-secondary"
+        aria-pressed="false"
         @click="numberClicked"
     >
-        {{ number }}
+        {{ number.name }}
     </button>
 </template>
 
@@ -14,7 +15,7 @@ export default {
 
     props: {
         number: {
-            type: Number,
+            type: Object,
             required: true,
         },
 
@@ -26,7 +27,10 @@ export default {
 
     methods: {
         numberClicked() {
-            this.$emit('scoreButtonClicked', (this.number * this.scoreMultiplier))
+            this.$emit('scoreButtonClicked', {
+                number : this.number,
+                multiplier: this.scoreMultiplier,
+            });
         },
     },
 }

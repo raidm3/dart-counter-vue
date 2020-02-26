@@ -91,5 +91,6 @@ export default {
 
 .upgrade-dialog > .upgrade-dialog__button--accept {
   justify-self: end;
+  color: #f2a900;
 }
 </style>

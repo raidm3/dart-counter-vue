@@ -1,8 +1,8 @@
 <template>
     <div class="row mx-2 my-2">
         <div
-            v-for="number in scoreButtonNumbers"
-            :key="number"
+            v-for="(number, index) in scoreButtonNumbers"
+            :key="index"
             :class="`col-${numberOfColumns}`"
             class="px-1"
         >

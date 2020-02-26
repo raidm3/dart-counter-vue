@@ -4,6 +4,10 @@ export default {
         state.gameModes.find(mode => mode.id == id).active = true;
     },
 
+    setGameOption(state, option) {
+        state.gameModes.map(mode => mode.option = option);
+    },
+
     setNextPlayer(state) {
         const currentActivePlayerId = state.players.find(player => player.active).id;
         state.players.map(player => player.active = false);
@@ -28,6 +32,9 @@ export default {
                 winner: false,
             });
         }
+
+        // reset checkout hint
+        state.checkoutHint = {};
     },
 
     setPlayerScore(state, payload) {
@@ -43,5 +50,14 @@ export default {
     setHighScore(state, payload) {
         state.stats.highscore.score = payload.scoreSum;
         state.stats.highscore.playerId = payload.activePlayerId;
+    },
+
+    resetStats(state) {
+        state.stats.rounds = 1;
+        state.stats.highscore = { score: 0, playerId: 0 };
+    },
+
+    setCheckoutHint(state, hint) {
+        state.checkoutHint = hint;
     },
 };

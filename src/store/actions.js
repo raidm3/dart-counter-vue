@@ -3,6 +3,10 @@ export default {
         commit('setActiveGameMode', id);
     },
 
+    setGameOption({ commit }, option) {
+        commit('setGameOption', option);
+    },
+
     setNextPlayer({ commit }) {
         commit('setNextPlayer');
     },
@@ -21,5 +25,13 @@ export default {
 
     startGame({ commit }, payload) {
         commit('startGame', payload);
+    },
+
+    resetStats({ commit }) {
+        commit('resetStats');
+    },
+
+    setCheckoutHint({ commit }, hint) {
+        commit('setCheckoutHint', hint);
     },
 };

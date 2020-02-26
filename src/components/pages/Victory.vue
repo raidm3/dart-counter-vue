@@ -69,6 +69,10 @@ export default {
             this.$router.push({ name: 'play', params: { mode: gameMode.name } });
         },
     },
+
+    destroyed() {
+        this.$store.dispatch('resetStats');
+    },
 }
 </script>
 
