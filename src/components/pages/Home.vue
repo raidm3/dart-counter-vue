@@ -85,7 +85,7 @@
                     @click="addNewPlayer"
                 >
                     <button
-                        type="button"
+                        :type="playerNames.length >= 4 ? '' : 'button'"
                         class="d-flex align-items-center px-3"
                         :class="[ playerNames.length >= 4 ? 
                             'text-disabled' : 'text-success']"
@@ -98,6 +98,7 @@
             <draggable
                 v-model="playerNames"
                 tag="div"
+                handle=".handle"
                 v-bind="dragOptions"
                 @start="isDragging=true"
                 @end="isDragging=false"
@@ -108,8 +109,8 @@
                         :key="index"
                         class="input-group pt-2"
                     >
-                        <div class="input-group-prepend border">
-                            <span class="d-flex align-items-center text-muted px-2">
+                        <div class="input-group-prepend border handle">
+                            <span class="d-flex align-items-center text-muted px-3">
                                 <font-awesome-icon :icon="['fas', 'arrows-alt-v']" />
                             </span>
                         </div>
@@ -125,7 +126,7 @@
                             @click="removePlayer(index)"
                         >
                             <button
-                                type="button"
+                                :type="playerNames.length === 1 ? '' : 'button'"
                                 class="d-flex align-items-center px-3"
                                 :class="[ playerNames.length === 1 ? 'text-disabled' : 'text-danger']"
                             >
