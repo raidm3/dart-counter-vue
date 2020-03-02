@@ -25,9 +25,6 @@ export default {
 
     startGame({ commit }, payload) {
         commit('startGame', payload);
-    },
-
-    resetStats({ commit }) {
         commit('resetStats');
     },
 

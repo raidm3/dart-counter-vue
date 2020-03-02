@@ -9,14 +9,20 @@
             :class="isActive ? 'bg-white text-dark' : ''"
             style="font-size: 100%;"
         >
-            {{ playerScore }}
+            <AnimatedNumber :number="playerScore"/>
         </span>
     </li>
 </template>
 
 <script>
+import AnimatedNumber from '../scores/AnimatedNumber.vue';
+
 export default {
     name: 'PlayersHeaderItem',
+
+    components: {
+        AnimatedNumber,
+    },
 
     props: {
         playerName: {

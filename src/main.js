@@ -1,7 +1,17 @@
 import Vue from 'vue';
 import App from './App.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faMinus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faTimes,
+  faMinus,
+  faSignOutAlt,
+  faGripLines,
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
+  faCrosshairs,
+  faArrowsAltV,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import createStore from './store';
@@ -12,7 +22,17 @@ Vue.config.productionTip = false;
 Vue.prototype.$workbox = wb;
 
 // Add fontawesome icons and initialize component
-library.add(faPlus, faMinus, faSignOutAlt);
+library.add(
+  faPlus,
+  faTimes,
+  faMinus,
+  faSignOutAlt,
+  faGripLines,
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
+  faCrosshairs,
+  faArrowsAltV,
+);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 const store = createStore();

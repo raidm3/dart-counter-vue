@@ -40,7 +40,7 @@ function installPWA(evt) {
     });
 }
 
-// CODELAB: Add event listener for appinstalled event
+// Add event listener for appinstalled event
 window.addEventListener('appinstalled', logAppInstalled);
 
 /**

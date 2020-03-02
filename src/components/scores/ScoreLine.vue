@@ -1,22 +1,27 @@
 <template>
     <div>
         <p class="text-monospace mb-1">
-            <span
-                v-for="(score, index) in scores"
-                :key="index"
-            >
-                {{ score.number.value * score.multiplier }}
-                <span v-if="index < scores.length-1"> + </span>
-                <span v-else> = </span>
-            </span>
+            <transition-group name="list">
+                <span
+                    v-for="(score, index) in scores"
+                    :key="index"
+                    class="list-item"
+                >
+                    {{ score.number.value * score.multiplier }}
+                    <span v-if="index < scores.length-1"> + </span>
+                    <span v-else> = </span>
+                </span>
+            </transition-group>
+
             <span
                 class="badge badge-primary"
                 style="font-size: 1rem;"
             >
-                {{ scoreSum }}
+                <AnimatedNumber :number="scoreSum"/>
             </span>
+
             <span>
-                ({{ remainingScore }})
+                (<AnimatedNumber :number="remainingScore"/>)
             </span>
 
             <CheckoutHint
@@ -30,12 +35,14 @@
 </template>
 
 <script>
+import AnimatedNumber from './AnimatedNumber.vue';
 import CheckoutHint from './CheckoutHint.vue';
 
 export default {
     name: 'ScoreLine',
 
     components: {
+        AnimatedNumber,
         CheckoutHint,
     },
 
@@ -66,3 +73,19 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.list-item {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-move {
+  transition: transform 1s;
+}
+.list-leave-active {
+  position: absolute;
+}
+</style>

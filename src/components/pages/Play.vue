@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-1">
         <PlayersHeader/>
 
         <ScoreMultipliers
@@ -86,7 +86,7 @@
                 <b>Undo</b>
             </button>
             <button
-                class="btn btn-block btn-link"
+                class="btn btn-block btn-link border-primary"
                 @click="quitGame"
             >
                 <b>Quit Game</b>
@@ -98,11 +98,11 @@
 </template>
 
 <script>
-import PlayersHeader from "../PlayersHeader.vue";
-import ScoreMultipliers from "../ScoreMultipliers.vue";
-import ScoreButtonsLine from "../ScoreButtonsLine.vue";
-import ScoreLine from "../ScoreLine.vue";
-import Snackbar from "../SnackBar.vue";
+import PlayersHeader from "../players/PlayersHeader.vue";
+import ScoreMultipliers from "../scores/ScoreMultipliers.vue";
+import ScoreButtonsLine from "../scores/ScoreButtonsLine.vue";
+import ScoreLine from "../scores/ScoreLine.vue";
+import Snackbar from "../notifications/SnackBar.vue";
 
 export default {
     name: 'Play',
@@ -251,6 +251,15 @@ export default {
         },
     },
 
+    // created() {
+    //     // Adds event listener for page refresh (not only this component)
+    //     window.addEventListener('beforeunload',(event) => {
+    //         event.preventDefault();
+    //         event.returnValue = 'Do you really want to quit the game?';
+    //     });
+    // },
+
+    // Adds event listener for navigating back or forward in the browser
     beforeRouteLeave (to, from, next) {
         if (!this.gameFinished) {
             const answer = window.confirm('Do you really want to quit the game?');

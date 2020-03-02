@@ -12,18 +12,20 @@
                 Best shot was <b>{{ highscore.score }}</b> from <b>{{ highscorePlayer.name }}</b>
             </p>
         </div>
-        <button
-            class="btn btn-primary btn-block"
-            @click="rematch()"
-        >
-            <b>Rematch</b>
-        </button>
-        <button
-            class="btn btn-secondary btn-block"
-            @click="backToHome()"
-        >
-            <b>Back to Home</b>
-        </button>
+        <div class="mx-2">
+            <button
+                class="btn btn-primary btn-block"
+                @click="rematch()"
+            >
+                <b>Rematch</b>
+            </button>
+            <button
+                class="btn btn-secondary btn-block"
+                @click="backToHome()"
+            >
+                <b>Back to Home</b>
+            </button>
+        </div>
     </div>
 </template>
 
@@ -68,10 +70,6 @@ export default {
             });
             this.$router.push({ name: 'play', params: { mode: gameMode.name } });
         },
-    },
-
-    destroyed() {
-        this.$store.dispatch('resetStats');
     },
 }
 </script>
