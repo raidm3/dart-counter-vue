@@ -1,7 +1,7 @@
 <template>
     <div class="row mx-2 mt-2">
         <div class="col-6 px-1">
-            <div class="custom-control custom-switch border py-2">
+            <div class="custom-control custom-switch border py-3">
                 <input
                     type="checkbox"
                     class="custom-control-input"
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="col-6 px-1">
-            <div class="custom-control custom-switch border py-2">
+            <div class="custom-control custom-switch border py-3">
                 <input
                     type="checkbox"
                     class="custom-control-input"

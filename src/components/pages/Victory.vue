@@ -14,13 +14,13 @@
         </div>
         <div class="mx-2">
             <button
-                class="btn btn-primary btn-block"
+                class="btn btn-lg btn-primary btn-block"
                 @click="rematch()"
             >
                 <b>Rematch</b>
             </button>
             <button
-                class="btn btn-secondary btn-block"
+                class="btn btn-lg btn-secondary btn-block"
                 @click="backToHome()"
             >
                 <b>Back to Home</b>

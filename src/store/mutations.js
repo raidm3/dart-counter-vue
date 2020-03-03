@@ -26,7 +26,7 @@ export default {
         for (let index = 0; index < payload.names.length; index++) {
             state.players.push({
                 id: index+1,
-                name: payload.names[index],
+                name: payload.names[index].name,
                 score: payload.mode.score,
                 active: index == 0 ? true : false,
                 winner: false,

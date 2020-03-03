@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <p class="text-monospace mb-1">
+    <div class="pt-2 pb-1">
+        <p
+            class="text-monospace mb-1"
+            style="font-size: 1.25rem;"
+        >
             <transition-group name="list">
                 <span
                     v-for="(score, index) in scores"
@@ -15,7 +18,7 @@
 
             <span
                 class="badge badge-primary"
-                style="font-size: 1rem;"
+                style="font-size: 1.25rem;"
             >
                 <AnimatedNumber :number="scoreSum"/>
             </span>
@@ -76,14 +79,14 @@ export default {
 
 <style scoped>
 .list-item {
-  transition: all 1s;
+  transition: all 0.5s;
 }
 .list-enter, .list-leave-to {
   opacity: 0;
   transform: translateY(30px);
 }
 .list-move {
-  transition: transform 1s;
+  transition: transform 0.5s;
 }
 .list-leave-active {
   position: absolute;

@@ -2,12 +2,13 @@
     <li
         class="list-group-item d-flex justify-content-between align-items-center"
         :class="isActive ? 'active' : ''"
+        style="font-size: 1.25rem;"
     >
         <b>{{ playerName }}</b>
         <span
             class="badge badge-primary"
             :class="isActive ? 'bg-white text-dark' : ''"
-            style="font-size: 100%;"
+            style="font-size: 1.25rem;"
         >
             <AnimatedNumber :number="playerScore"/>
         </span>

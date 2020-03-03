@@ -72,15 +72,15 @@
             :activePlayerScore="activePlayerScore"
         />
 
-        <div class="mx-2">
+        <div class="m-2">
             <button
-                class="btn btn-block btn-success"
+                class="btn btn-lg btn-block btn-success"
                 @click="setPlayerScore()"
             >
                 <b>Accept</b>
             </button>
             <button
-                class="btn btn-block btn-danger"
+                class="btn btn-lg btn-block btn-danger"
                 @click="undoLastScore()"
             >
                 <b>Undo</b>

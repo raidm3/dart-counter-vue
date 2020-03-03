@@ -1,7 +1,7 @@
 <template>
     <button
         type="button"
-        class="btn btn-block btn-outline-secondary"
+        class="btn btn-lg btn-block btn-outline-secondary px-1"
         aria-pressed="false"
         @click="numberClicked"
     >

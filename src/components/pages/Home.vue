@@ -85,10 +85,9 @@
                     @click="addNewPlayer"
                 >
                     <button
-                        :type="playerNames.length >= 4 ? '' : 'button'"
-                        class="d-flex align-items-center px-3"
-                        :class="[ playerNames.length >= 4 ? 
-                            'text-disabled' : 'text-success']"
+                        type="button"
+                        class="btn btn-success d-flex align-items-center px-3"
+                        :disabled="playerNames.length >= 4"
                     >
                         <font-awesome-icon :icon="['fas', 'plus']" />
                     </button>
@@ -105,8 +104,8 @@
             >
                 <transition-group type="transition" :name="!isDragging ? 'flip-list' : null">
                     <div
-                        v-for="(name, index) in playerNames"
-                        :key="index"
+                        v-for="(player, index) in playerNames"
+                        :key="player.id"
                         class="input-group pt-2"
                     >
                         <div class="input-group-prepend border handle">
@@ -115,10 +114,10 @@
                             </span>
                         </div>
                         <input
-                            v-model="playerNames[index]"
+                            v-model="player.name"
                             type="text"
                             class="form-control"
-                            :placeholder="name"
+                            :placeholder="player.name"
                             @click="preSelectText">
 
                         <div
@@ -126,9 +125,9 @@
                             @click="removePlayer(index)"
                         >
                             <button
-                                :type="playerNames.length === 1 ? '' : 'button'"
-                                class="d-flex align-items-center px-3"
-                                :class="[ playerNames.length === 1 ? 'text-disabled' : 'text-danger']"
+                                type="button"
+                                class="btn btn-danger px-3 d-flex align-items-center"
+                                :disabled="playerNames.length === 1"
                             >
                                 <font-awesome-icon :icon="['fas', 'times']"/>
                             </button>
@@ -141,7 +140,7 @@
 
     <div class="m-2">
         <button
-            class="btn btn-block btn-primary"
+            class="btn btn-lg btn-block btn-primary"
             @click="startGame"
         >
             <b>Let's Dart!</b>
@@ -162,8 +161,9 @@ export default {
 
     data() {
         return {
-            playerNames: ['Player 1'],
+            playerNames: [ { id: 1, name: 'Player 1' } ],
             newPlayer: '',
+            newPlayerId: 2,
             isDragging: false,
         };
     },
@@ -225,9 +225,9 @@ export default {
             }
 
             if (this.newPlayer === '') {
-                this.playerNames.push(`Player ${this.playerNames.length+1}`);
+                this.playerNames.push({ id: this.newPlayerId++, name: `Player ${this.playerNames.length+1}` });
             } else {
-                this.playerNames.push(this.newPlayer);
+                this.playerNames.push({ id: this.newPlayerId++, name: this.newPlayer });
             }
 
             this.newPlayer = '';
