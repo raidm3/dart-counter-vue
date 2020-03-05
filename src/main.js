@@ -11,6 +11,8 @@ import {
   faAngleDoubleRight,
   faCrosshairs,
   faArrowsAltV,
+  faCheck,
+  faUndo,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -32,6 +34,8 @@ library.add(
   faAngleDoubleRight,
   faCrosshairs,
   faArrowsAltV,
+  faCheck,
+  faUndo,
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

@@ -1,9 +1,6 @@
 <template>
-    <div class="pt-2 pb-1">
-        <p
-            class="text-monospace mb-1"
-            style="font-size: 1.25rem;"
-        >
+    <div class="border mx-2 py-1">
+        <p class="text-monospace mb-0">
             <transition-group name="list">
                 <span
                     v-for="(score, index) in scores"
@@ -16,10 +13,7 @@
                 </span>
             </transition-group>
 
-            <span
-                class="badge badge-primary"
-                style="font-size: 1.25rem;"
-            >
+            <span class="badge badge-primary" style="font-size: 1rem;">
                 <AnimatedNumber :number="scoreSum"/>
             </span>
 

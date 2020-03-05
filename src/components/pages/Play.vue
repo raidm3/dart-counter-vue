@@ -72,27 +72,25 @@
             :activePlayerScore="activePlayerScore"
         />
 
-        <div class="m-2">
-            <button
-                class="btn btn-lg btn-block btn-success"
-                @click="setPlayerScore()"
-            >
-                <b>Accept</b>
-            </button>
-            <button
-                class="btn btn-lg btn-block btn-danger"
-                @click="undoLastScore()"
-            >
-                <b>Undo</b>
-            </button>
-            <button
-                class="btn btn-block btn-link border-primary"
-                @click="quitGame"
-            >
+        <div class="row m-2">
+            <div class="col-6 px-2">
+                <button class="btn btn-lg btn-block btn-danger" @click="undoLastScore">
+                    <b>Undo</b>
+                    <font-awesome-icon class="ml-1 pl-1" :icon="['fas', 'undo']" />
+                </button>
+            </div>
+            <div class="col-6 px-2">
+                <button class="btn btn-lg btn-block btn-success" @click="setPlayerScore">
+                    <b>Accept</b>
+                <font-awesome-icon class="ml-1 pl-1" :icon="['fas', 'check']" />
+                </button>
+            </div>
+            <button class="btn btn-block btn-link" @click="quitGame">
                 <b>Quit Game</b>
-                <font-awesome-icon class="ml-1" :icon="['fas', 'sign-out-alt']" />
+                <font-awesome-icon class="ml-2" :icon="['fas', 'sign-out-alt']" />
             </button>
         </div>
+
         <Snackbar ref="snackbar"/>
     </div>
 </template>
@@ -250,14 +248,6 @@ export default {
             this.$router.push({ path: '/' });
         },
     },
-
-    // created() {
-    //     // Adds event listener for page refresh (not only this component)
-    //     window.addEventListener('beforeunload',(event) => {
-    //         event.preventDefault();
-    //         event.returnValue = 'Do you really want to quit the game?';
-    //     });
-    // },
 
     // Adds event listener for navigating back or forward in the browser
     beforeRouteLeave (to, from, next) {

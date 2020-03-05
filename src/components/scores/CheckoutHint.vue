@@ -1,5 +1,5 @@
 <template>
-    <div class="border-top my-2 mx-5">
+    <div class="border-top mt-2 mx-5">
         <span
             v-if="checkoutHint"
             class="d-block font-italic text-muted mt-1"
