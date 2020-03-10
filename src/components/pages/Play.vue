@@ -85,7 +85,7 @@
                 <font-awesome-icon class="ml-1 pl-1" :icon="['fas', 'check']" />
                 </button>
             </div>
-            <button class="btn btn-block btn-link" @click="quitGame">
+            <button class="btn btn-block btn-link mt-2" @click="quitGame">
                 <b>Quit Game</b>
                 <font-awesome-icon class="ml-2" :icon="['fas', 'sign-out-alt']" />
             </button>
