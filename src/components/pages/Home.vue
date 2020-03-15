@@ -44,6 +44,7 @@
                 <div class="custom-control custom-radio custom-control-inline">
                     <input
                         v-model="gameOptions"
+                        :disabled="this.activeGameModeType !== 'Classic'"
                         type="radio"
                         id="singleOutRadioBtn"
                         name="optionRadios"
@@ -55,6 +56,7 @@
                 <div class="custom-control custom-radio custom-control-inline">
                     <input
                         v-model="gameOptions"
+                        :disabled="this.activeGameModeType !== 'Classic'"
                         type="radio"
                         id="doubleOutRadioBtn"
                         name="optionRadios"
@@ -195,6 +197,10 @@ export default {
             return this.activeGameMode.name;
         },
 
+        activeGameModeType() {
+            return this.activeGameMode.type;
+        },
+
         dragOptions() {
             return {
                 animation: 200,
@@ -216,7 +222,7 @@ export default {
                 mode: this.activeGameMode,
                 option: this.gameOptions,
             });
-            this.$router.push({ name: 'play', params: { mode: this.activeGameModeName } });
+            this.$router.push({ name: 'play', params: { mode: this.activeGameModeType } });
         },
 
         addNewPlayer() {

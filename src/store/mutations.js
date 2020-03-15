@@ -37,9 +37,14 @@ export default {
         state.checkoutHint = {};
     },
 
-    setPlayerScore(state, payload) {
+    substractPlayerScore(state, payload) {
         const player = state.players.find(player => player.id == payload.activePlayerId);
-        player.score -= payload.scoreSum;
+        player.score -= payload.score;
+    },
+
+    addPlayerScore(state, payload) {
+        const player = state.players.find(player => player.id == payload.activePlayerId);
+        player.score += payload.score;
     },
 
     setWinner(state, playerId) {

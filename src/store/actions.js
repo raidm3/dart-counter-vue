@@ -12,9 +12,15 @@ export default {
     },
 
     setPlayerScore({ commit, getters }, payload) {
-        commit('setPlayerScore', payload);
+        if (getters.activeGameMode.type === 'Classic') {
+            commit('substractPlayerScore', payload);
+        }
+        
+        if (getters.activeGameMode.type === 'AroundTheWorld') {
+            commit('addPlayerScore', payload);
+        }
 
-        if (getters.highscore.score < payload.scoreSum) {
+        if (getters.highscore.score < payload.score) {
             commit('setHighScore', payload);
         }
     },

@@ -1,5 +1,5 @@
 <template>
-    <div class="row mx-2 my-2">
+    <div class="row m-2">
         <div
             v-for="(number, index) in scoreButtonNumbers"
             :key="index"

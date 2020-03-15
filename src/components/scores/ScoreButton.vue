@@ -1,11 +1,17 @@
 <template>
     <button
         type="button"
-        class="btn btn-lg btn-block btn-outline-secondary px-1"
+        class="btn btn-lg btn-block px-1"
+        :class="[ number.done ? 'btn-dark' : 'btn-outline-secondary' ]"
         aria-pressed="false"
+        :disabled="number.disabled"
         @click="numberClicked"
     >
-        {{ number.name }}
+        <font-awesome-icon
+            v-if="number.done"
+            :icon="['fas', 'check']"
+        />
+        <span v-else>{{ number.name }}</span>
     </button>
 </template>
 
