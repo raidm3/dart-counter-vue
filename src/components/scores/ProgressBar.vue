@@ -1,6 +1,9 @@
 <template>
   <div class="m-2">
-    <div class="progress">
+    <div
+      class="progress"
+      style="height: 1.5rem;"
+    >
       <div
         class="progress-bar bg-info"
         role="progressbar"
@@ -8,9 +11,7 @@
         :aria-valuenow="this.activePlayerFinishedInPercent"
         aria-valuemin="0"
         aria-valuemax="100"
-      >
-        <b> {{ activePlayerFinishedInPercent }}% </b>
-      </div>
+      />
     </div>
   </div>
 </template>

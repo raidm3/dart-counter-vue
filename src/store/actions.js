@@ -15,9 +15,13 @@ export default {
         if (getters.activeGameMode.type === 'Classic') {
             commit('substractPlayerScore', payload);
         }
-        
+
         if (getters.activeGameMode.type === 'AroundTheWorld') {
             commit('addPlayerScore', payload);
+        }
+
+        if (getters.activeGameMode.type === 'Cricket') {
+            commit('setPlayerScore', payload);
         }
 
         if (getters.highscore.score < payload.score) {

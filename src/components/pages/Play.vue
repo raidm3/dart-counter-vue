@@ -10,9 +10,10 @@
 </template>
 
 <script>
-import PlayersHeader from "../players/PlayersHeader.vue";
+import PlayersHeader from '../players/PlayersHeader.vue';
 import Classic from '../modes/Classic.vue';
 import AroundTheWorld from '../modes/AroundTheWorld.vue';
+import Cricket from '../modes/Cricket.vue';
 
 export default {
     name: 'Play',
@@ -21,6 +22,7 @@ export default {
         PlayersHeader,
         Classic,
         AroundTheWorld,
+        Cricket,
     },
 
     data() {

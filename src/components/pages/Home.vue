@@ -33,7 +33,10 @@
     </div>
 
     <!-- Game Options -->
-    <div class="card border-bottom-0">
+    <div
+        v-if="this.activeGameModeType === 'Classic'"
+        class="card border-bottom-0"
+    >
         <div class="card-body">
             <h6 class="card-title text-monospace">
                 <font-awesome-icon :icon="['fas', 'angle-double-left']" />
@@ -44,7 +47,6 @@
                 <div class="custom-control custom-radio custom-control-inline">
                     <input
                         v-model="gameOptions"
-                        :disabled="this.activeGameModeType !== 'Classic'"
                         type="radio"
                         id="singleOutRadioBtn"
                         name="optionRadios"
@@ -56,7 +58,6 @@
                 <div class="custom-control custom-radio custom-control-inline">
                     <input
                         v-model="gameOptions"
-                        :disabled="this.activeGameModeType !== 'Classic'"
                         type="radio"
                         id="doubleOutRadioBtn"
                         name="optionRadios"
@@ -82,14 +83,12 @@
                         type="text"
                         class="form-control"
                         placeholder="Add new player"/>
-                <div
-                    class="input-group-append border"
-                    @click="addNewPlayer"
-                >
+                <div class="input-group-append border">
                     <button
                         type="button"
                         class="btn btn-success d-flex align-items-center px-3"
-                        :disabled="playerNames.length >= 4"
+                        :disabled="playerNames.length >= 4 || activeGameModeId === 5"
+                        @click="addNewPlayer"
                     >
                         <font-awesome-icon :icon="['fas', 'plus']" />
                     </button>
@@ -122,14 +121,12 @@
                             :placeholder="player.name"
                             @click="preSelectText">
 
-                        <div
-                            class="input-group-append border"
-                            @click="removePlayer(index)"
-                        >
+                        <div class="input-group-append border">
                             <button
                                 type="button"
                                 class="btn btn-danger px-3 d-flex align-items-center"
-                                :disabled="playerNames.length === 1"
+                                :disabled="playerNames.length === 1 || activeGameModeId === 5"
+                                @click="removePlayer(index)"
                             >
                                 <font-awesome-icon :icon="['fas', 'times']"/>
                             </button>
@@ -213,6 +210,14 @@ export default {
 
     methods: {
         selectGameMode(id) {
+            // Check if Cricket has been selected to disable player add/remove functionality
+            if (id === 5) {
+                this.playerNames = [
+                    { id: 1, name: 'Player 1' },
+                    { id: 2, name: 'Player 2' }
+                ];
+                this.newPlayerId++;
+            }
             this.$store.dispatch('setActiveGameMode', id);
         },
 
@@ -222,6 +227,7 @@ export default {
                 mode: this.activeGameMode,
                 option: this.gameOptions,
             });
+
             this.$router.push({ name: 'play', params: { mode: this.activeGameModeType } });
         },
 

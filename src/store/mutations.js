@@ -47,6 +47,11 @@ export default {
         player.score += payload.score;
     },
 
+    setPlayerScore(state, payload) {
+        const player = state.players.find(player => player.id == payload.activePlayerId);
+        player.score = payload.score;
+    },
+
     setWinner(state, playerId) {
         const player = state.players.find(player => player.id == playerId);
         player.winner = true;

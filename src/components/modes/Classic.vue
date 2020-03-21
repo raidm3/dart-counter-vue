@@ -6,88 +6,52 @@
     />
 
     <ScoreButtonsLine
-        :scoreButtonNumbers="[
-            {name: '1', value: 1},
-            {name: '2', value: 2},
-            {name: '3', value: 3},
-            {name: '4', value: 4},
-        ]"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
+      :scoreButtonNumbers="createButtonLine([1, 2, 3, 4])"
+      :scoreMultiplier="scoreMultiplier"
+      @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-        :scoreButtonNumbers="[
-            {name: '5', value: 5},
-            {name: '6', value: 6},
-            {name: '7', value: 7},
-            {name: '8', value: 8},
-        ]"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
+      :scoreButtonNumbers="createButtonLine([5, 6, 7, 8])"
+      :scoreMultiplier="scoreMultiplier"
+      @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-        :scoreButtonNumbers="[
-            {name: '9', value: 9},
-            {name: '10', value: 10},
-            {name: '11', value: 11},
-            {name: '12', value: 12},
-        ]"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
+      :scoreButtonNumbers="createButtonLine([9, 10, 11, 12])"
+      :scoreMultiplier="scoreMultiplier"
+      @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-        :scoreButtonNumbers="[
-            {name: '13', value: 13},
-            {name: '14', value: 14},
-            {name: '15', value: 15},
-            {name: '16', value: 16},
-        ]"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
+      :scoreButtonNumbers="createButtonLine([13, 14, 15, 16])"
+      :scoreMultiplier="scoreMultiplier"
+      @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-        :scoreButtonNumbers="[
-            {name: '17', value: 17},
-            {name: '18', value: 18},
-            {name: '19', value: 19},
-            {name: '20', value: 20},
-        ]"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
+      :scoreButtonNumbers="createButtonLine([17, 18, 19, 20])"
+      :scoreMultiplier="scoreMultiplier"
+      @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-        :scoreButtonNumbers="[
-            {name: 'Bull', value: 25},
-            {name: 'Bulls Eye', value: 50},
-            {name: 'Classico', value: 26},
-        ]"
-        @scoreButtonClicked="scoreButtonClicked"
+      :scoreButtonNumbers="[
+          { name: 'Bull', value: 25, disabled: this.scores.length === 3, done: false, active: false },
+          { name: 'Bulls Eye', value: 50, disabled: this.scores.length === 3, done: false, active: false },
+          { name: 'Classico', value: 26, disabled: this.scores.length === 3, done: false, active: false },
+      ]"
+      :scoreMultiplier="scoreMultiplier"
+      @scoreButtonClicked="scoreButtonClicked"
     />
 
     <ScoreLine
         :scores="scores"
-        :scoreSum="scoreSum"
-        :activePlayerScore="activePlayerScore"
+        :showSum="true"
+        :showRemainingScore="true"
+        :showCheckoutHint="finishOption == 'doubleOut'"
     />
 
-    <div class="row m-2">
-        <div class="col-6 px-2">
-            <button class="btn btn-lg btn-block btn-danger" @click="undoLastScore">
-                <b>Undo</b>
-                <font-awesome-icon class="ml-1 pl-1" :icon="['fas', 'undo']" />
-            </button>
-        </div>
-        <div class="col-6 px-2">
-            <button class="btn btn-lg btn-block btn-success" @click="setPlayerScore">
-                <b>Accept</b>
-            <font-awesome-icon class="ml-1 pl-1" :icon="['fas', 'check']" />
-            </button>
-        </div>
-        <button class="btn btn-block btn-link mt-2" @click="quitGame">
-            <b>Quit Game</b>
-            <font-awesome-icon class="ml-2" :icon="['fas', 'sign-out-alt']" />
-        </button>
-    </div>
+    <ActionBar
+      :currentRound="currentRound"
+      @accept="setPlayerScore"
+      @undo="undoLastShot"
+    />
 
     <Snackbar ref="snackbar"/>
   </div>
@@ -97,6 +61,7 @@
 import ScoreMultipliers from "../scores/ScoreMultipliers.vue";
 import ScoreButtonsLine from "../scores/ScoreButtonsLine.vue";
 import ScoreLine from "../scores/ScoreLine.vue";
+import ActionBar from "../actionbar/ActionBar.vue";
 import Snackbar from "../notifications/SnackBar.vue";
 
 export default {
@@ -106,6 +71,7 @@ export default {
     ScoreMultipliers,
     ScoreButtonsLine,
     ScoreLine,
+    ActionBar,
     Snackbar,
   },
 
@@ -150,9 +116,25 @@ export default {
 
       return sum;
     },
+
+    currentRound() {
+      return this.$store.state.stats.rounds;
+    },
   },
 
   methods: {
+    createButtonLine(ids) {
+      return ids.map(id => {
+        return {
+          name: `${id}`,
+          value: id,
+          disabled: this.scores.length === 3,
+          done: false,
+          active: false,
+        }
+      });
+    },
+
     setPlayerScore() {
         // VICTORY
         if (this.activePlayerScore == this.scoreSum) {
@@ -218,6 +200,7 @@ export default {
         // switch player
         this.$store.dispatch('setNextPlayer');
         this.$store.dispatch('setCheckoutHint', {});
+        this.$refs.snackbar.show(`Next player: ${this.activePlayer.name}`);
     },
 
     scoreButtonClicked(event) {
@@ -235,7 +218,7 @@ export default {
       this.scoreMultiplier = 1;
     },
 
-    undoLastScore() {
+    undoLastShot() {
       this.scores.pop();
     },
 
