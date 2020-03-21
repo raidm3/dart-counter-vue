@@ -13,6 +13,7 @@ import {
   faArrowsAltV,
   faCheck,
   faUndo,
+  faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -36,6 +37,7 @@ library.add(
   faArrowsAltV,
   faCheck,
   faUndo,
+  faTrophy,
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

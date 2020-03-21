@@ -256,6 +256,10 @@ export default {
             event.target.setSelectionRange(0, event.target.value.length);
         },
     },
+
+    mounted() {
+        this.$store.dispatch('setActiveGameMode', 1);
+    },
 }
 </script>
 

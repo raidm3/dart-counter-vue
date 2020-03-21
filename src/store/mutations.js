@@ -58,7 +58,7 @@ export default {
     },
 
     setHighScore(state, payload) {
-        state.stats.highscore.score = payload.scoreSum;
+        state.stats.highscore.score = payload.score;
         state.stats.highscore.playerId = payload.activePlayerId;
     },
 
@@ -69,5 +69,15 @@ export default {
 
     setCheckoutHint(state, hint) {
         state.checkoutHint = hint;
+    },
+
+    countRound(state, payload) {
+        const player = state.players.find(player => player.id == payload.activePlayerId);
+
+        if (player.rounds) {
+            player.rounds++;
+        } else {
+            player.rounds = 1;
+        }
     },
 };

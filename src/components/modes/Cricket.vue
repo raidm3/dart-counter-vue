@@ -10,9 +10,12 @@
         <div
           v-for="hit in players[0].hits"
           :key="hit.id"
-          style="height: 38px; margin-bottom: 8px; padding: 5px;"
+          style="height: 38px; margin-bottom: 8px; padding: 5px 0 5px 56px;"
         >
-           <div class="inning" :class="{ 'circle': hit.counter >= 3 }">
+           <div
+            class="inning"
+            :class="{ 'circle': hit.counter >= 3 }"
+          >
              <div :class="{ 'firstLine': hit.counter >= 1 }"></div>
              <div :class="{ 'secondLine': hit.counter >= 2 }"></div>
            </div>
@@ -37,9 +40,12 @@
         <div
           v-for="hit in players[1].hits"
           :key="hit.id"
-          style="height: 38px; margin-bottom: 8px; padding: 5px;"
+          style="height: 38px; margin-bottom: 8px; padding: 5px 56px 5px 0;"
         >
-           <div class="inning" :class="{ 'circle': hit.counter >= 3 }">
+           <div
+            class="inning"
+            :class="{ 'circle': hit.counter >= 3 }"
+          >
              <div :class="{ 'firstLine': hit.counter >= 1 }"></div>
              <div :class="{ 'secondLine': hit.counter >= 2 }"></div>
            </div>
@@ -250,6 +256,9 @@ export default {
   border: 2px solid #333;
   border-radius: 50%
 }
+.circleRed {
+  border-color: red !important;
+}
 .firstLine:before {
   position: absolute;
   left: 11px;
@@ -257,6 +266,9 @@ export default {
   height: 25px;
   width: 2px;
   background-color: #333;
+}
+.firstLineRed:before {
+  background-color: red !important;
 }
 .firstLine:before {
   transform: rotate(45deg);
@@ -268,6 +280,9 @@ export default {
   height: 25px;
   width: 2px;
   background-color: #333;
+}
+.secondLineRed:after {
+  background-color: red !important;
 }
 .secondLine:after {
   transform: rotate(-45deg);

@@ -14,6 +14,7 @@ export default {
     setPlayerScore({ commit, getters }, payload) {
         if (getters.activeGameMode.type === 'Classic') {
             commit('substractPlayerScore', payload);
+            commit('countRound', payload);
         }
 
         if (getters.activeGameMode.type === 'AroundTheWorld') {
