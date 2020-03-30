@@ -8,6 +8,7 @@ describe('ScoreButton.vue', () => {
         number: {
           name: '1',
           value: 1,
+          disabled: true,
         },
         scoreMultiplier: 1,
        },
@@ -16,5 +17,9 @@ describe('ScoreButton.vue', () => {
     expect(
       wrapper.find('button').text(),
     ).toBe('1');
+
+    expect(
+      wrapper.find('button').attributes('disabled'),
+    ).toBe('disabled');
   });
 });

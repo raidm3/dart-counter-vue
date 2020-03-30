@@ -2,19 +2,19 @@
   <div id="app">
     <router-view></router-view>
 
-    <RefreshDialog/>
+    <!-- <RefreshDialog/> -->
   </div>
 </template>
 
 <script>
-import RefreshDialog from './components/notifications/RefreshDialog.vue';
+// import RefreshDialog from './components/notifications/RefreshDialog.vue';
 
 export default {
   name: 'app',
   
-  components: {
-    RefreshDialog,
-  },
+  // components: {
+  //   RefreshDialog,
+  // },
 }
 </script>
 
