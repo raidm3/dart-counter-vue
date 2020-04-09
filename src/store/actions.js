@@ -15,6 +15,10 @@ export default {
         if (getters.activeGameMode.type === 'Classic') {
             commit('substractPlayerScore', payload);
             commit('countRound', payload);
+            
+            if (payload.score > 60) {
+                commit('countHighShots', payload);
+            }
         }
 
         if (getters.activeGameMode.type === 'AroundTheWorld') {

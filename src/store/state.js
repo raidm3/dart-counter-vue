@@ -17,5 +17,9 @@ export default {
             score: 0,
             playerId: 0,
         },
+        highShots: {
+            sixty: [], // { playerId: 1, count: 0 }
+            hundred: [], // { playerId: 1, count: 0 }
+        },
     }
 };

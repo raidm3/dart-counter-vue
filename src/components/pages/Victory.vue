@@ -24,6 +24,18 @@
                     {{ player.name }}: 
                     <b>{{ calculateAverageScore(player.score, player.rounds) }}</b> Points <br/>
                 </span>
+
+                <span class="h5 d-block mt-2">High Shots</span>
+                <span
+                    v-for="player in players"
+                    :key="player.id"
+                    class="d-block"
+                >
+                    {{ player.name }}:
+                    <b>60+</b> ({{ highShots.sixty.find(shot => shot.playerId == player.id).count }}x)
+                    |
+                    <b>100+</b> ({{ highShots.hundred.find(shot => shot.playerId == player.id).count }}x)
+                </span>
             </p>
         </div>
         <div class="mx-2">
@@ -79,12 +91,18 @@ export default {
         players() {
             return this.$store.state.players;
         },
+
+        highShots() {
+            return this.$store.state.stats.highShots;
+        },
     },
 
     methods: {
         calculateAverageScore(score, rounds) {
             return Math.round((this.activeGameMode.score - score) / rounds * 100) / 100;
         },
+
+
 
         backToHome() {
             this.$router.push({ name: 'home' });

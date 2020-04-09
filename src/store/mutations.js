@@ -31,6 +31,16 @@ export default {
                 active: index == 0 ? true : false,
                 winner: false,
             });
+
+            state.stats.highShots.sixty.push({
+                playerId: index+1,
+                count: 0,
+            });
+
+            state.stats.highShots.hundred.push({
+                playerId: index+1,
+                count: 0,
+            });
         }
 
         // reset checkout hint
@@ -78,6 +88,22 @@ export default {
             player.rounds++;
         } else {
             player.rounds = 1;
+        }
+    },
+
+    countHighShots(state, payload) {
+        const highShots = state.stats.highShots;
+
+        if (payload.score > 60) {
+            highShots.sixty.find(
+                playerStats => playerStats.playerId == payload.activePlayerId
+            ).count++;
+        }
+
+        if (payload.score > 100) {
+            highShots.hundred.find(
+                playerStats => playerStats.playerId == payload.activePlayerId
+            ).count++;
         }
     },
 };
