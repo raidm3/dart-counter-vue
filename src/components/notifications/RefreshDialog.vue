@@ -27,6 +27,15 @@ export default {
             this.$workbox.addEventListener("waiting", () => {
                 this.prompt = true;
             });
+            this.$workbox.addEventListener("isUpdate", () => {
+                this.prompt = true;
+            });
+            this.$workbox.addEventListener("waiting", () => {
+                this.prompt = true;
+            });
+            this.$workbox.addEventListener("externalwaiting", () => {
+                this.prompt = true;
+            });
         }
     },
 
