@@ -16,7 +16,7 @@ export default {
             commit('substractPlayerScore', payload);
             commit('countRound', payload);
             
-            if (payload.score > 60) {
+            if (payload.score >= 60) {
                 commit('countHighShots', payload);
             }
         }
@@ -39,8 +39,8 @@ export default {
     },
 
     startGame({ commit }, payload) {
-        commit('startGame', payload);
         commit('resetStats');
+        commit('startGame', payload);
     },
 
     setCheckoutHint({ commit }, hint) {

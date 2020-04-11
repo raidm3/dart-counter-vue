@@ -1,5 +1,5 @@
 <template>
-  <div class="border mx-2 py-1">
+  <div class="mx-2 py-1">
     <p class="text-monospace mb-0">
       <transition-group name="list">
         <span

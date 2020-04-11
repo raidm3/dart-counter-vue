@@ -1,5 +1,5 @@
 <template>
-    <li
+    <!-- <li
         class="list-group-item d-flex justify-content-between align-items-center py-2"
         :class="isActive ? 'active' : ''"
         style="font-size: 1.1rem;"
@@ -12,7 +12,13 @@
         >
             <AnimatedNumber :number="playerScore"/>
         </span>
-    </li>
+    </li> -->
+    <div class="rounded" :class="isActive ? 'bg-primary text-white' : ''">
+        <span class="d-block text-uppercase">{{ playerName }}</span>
+        <span class="h4">
+            <AnimatedNumber :number="playerScore"/>
+        </span>
+    </div>
 </template>
 
 <script>

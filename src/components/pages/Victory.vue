@@ -6,9 +6,14 @@
             <h3 class="font-weight-bold">
                 {{ winnerName }}
             </h3>
-            <span v-for="player in players" :key="player.id">
-                {{ player.name }}: {{ player.score }} Points <br/>
-            </span>
+
+            <div v-if="activeGameType !== 'Classic'">
+                <span v-for="player in players" :key="player.id">
+                    <span>{{ player.name }}:</span>
+                    <span class="font-weight-bold pl-2">{{ player.score }} Points</span>
+                    <br/>
+                </span>
+            </div>
 
             <hr>
 
@@ -16,27 +21,34 @@
             <p class="mb-1">
                 Game has been finished in <b>Round {{ currentRound }}</b>
             </p>
-            <p v-if="activeGameType === 'Classic'" class="mb-1">
+            <div v-if="activeGameType === 'Classic'" class="mb-1">
                 Best shot was <b>{{ highscore.score }}</b> from <b>{{ highscorePlayer.name }}</b>
 
-                <span class="h5 d-block mt-2">Average Score</span>
-                <span v-for="player in players" :key="player.id">
-                    {{ player.name }}: 
-                    <b>{{ calculateAverageScore(player.score, player.rounds) }}</b> Points <br/>
-                </span>
+                <hr>
 
-                <span class="h5 d-block mt-2">High Shots</span>
-                <span
-                    v-for="player in players"
-                    :key="player.id"
-                    class="d-block"
-                >
-                    {{ player.name }}:
-                    <b>60+</b> ({{ highShots.sixty.find(shot => shot.playerId == player.id).count }}x)
-                    |
-                    <b>100+</b> ({{ highShots.hundred.find(shot => shot.playerId == player.id).count }}x)
-                </span>
-            </p>
+                <span class="h5 d-block mt-2">Points</span>
+                <table class="table table-borderless table-sm text-white">
+                    <thead>
+                        <tr class="border-bottom">
+                            <th class="border-right" colspan="1" scope="col"></th>
+                            <th scope="col">&#8960; Score</th>
+                            <th scope="col">60+</th>
+                            <th scope="col">100+</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="player in players"
+                            :key="player.id"
+                        >
+                            <th class="border-right" colspan="1" scope="row">{{ player.name }}</th>
+                            <td>{{ calculateAverageScore(player.score, player.rounds) }}</td>
+                            <td>{{ getHighShotOfPlayer(player.id, 'sixty') }}x</td>
+                            <td>{{ getHighShotOfPlayer(player.id, 'hundred') }}x</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="mx-2">
             <button
@@ -102,7 +114,9 @@ export default {
             return Math.round((this.activeGameMode.score - score) / rounds * 100) / 100;
         },
 
-
+        getHighShotOfPlayer(id, type) {
+            return this.highShots[type].find(shot => shot.playerId == id).count;
+        },
 
         backToHome() {
             this.$router.push({ name: 'home' });

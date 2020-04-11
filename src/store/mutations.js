@@ -75,6 +75,10 @@ export default {
     resetStats(state) {
         state.stats.rounds = 1;
         state.stats.highscore = { score: 0, playerId: 0 };
+        state.stats.highShots = {
+            sixty: [],
+            hundred: [],
+        }
     },
 
     setCheckoutHint(state, hint) {
@@ -94,13 +98,13 @@ export default {
     countHighShots(state, payload) {
         const highShots = state.stats.highShots;
 
-        if (payload.score > 60) {
+        if (payload.score >= 60 && payload.score < 100) {
             highShots.sixty.find(
                 playerStats => playerStats.playerId == payload.activePlayerId
             ).count++;
         }
 
-        if (payload.score > 100) {
+        if (payload.score >= 100) {
             highShots.hundred.find(
                 playerStats => playerStats.playerId == payload.activePlayerId
             ).count++;
