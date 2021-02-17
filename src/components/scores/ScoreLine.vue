@@ -1,13 +1,13 @@
 <template>
-  <div class="mx-2 py-1">
-    <p class="text-monospace mb-0">
+  <div class="mx-2 pt-1 pb-2">
+    <p class="text-monospace mb-0" style="font-size: 1.10rem;">
       <transition-group name="list">
         <span
           v-for="(score, index) in scores"
           :key="index" class="list-item"
         >
           {{ formatScore(score) }}
-          <span v-if="index < scores.length-1"> - </span>
+          <span v-if="index < scores.length-1"> + </span>
         </span>
       </transition-group>
 
@@ -18,7 +18,7 @@
         <AnimatedNumber
           :number="scoreSum"
           class="badge badge-primary"
-          style="font-size: 1rem;"
+          style="font-size: 1.25rem;"
         />
       </span>
 
@@ -93,7 +93,7 @@ export default {
   methods: {
     formatScore(score) {
       const prefix = score.multiplier === 3 ? 'T' : score.multiplier === 2 ? 'D' : '';
-      const suffix = score.number.name === 'Bull' && score.multiplier === 2 ? 'B' : score.number.name;
+      const suffix = score.number.name === 'Bull' ? 'B' : score.number.name;
 
       return prefix + suffix;
     },

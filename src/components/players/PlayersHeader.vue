@@ -11,6 +11,7 @@
                         :key="player.id"
                         :playerName="player.name"
                         :playerScore="player.score"
+                        :playerAverage="player.average"
                         :isActive="activePlayer.id == player.id"
                     />
                 </ul>
@@ -27,6 +28,7 @@
                         :key="player.id"
                         :playerName="player.name"
                         :playerScore="player.score"
+                        :playerAverage="player.average"
                         :isActive="activePlayer.id == player.id"
                     />
                 </ul>
@@ -39,56 +41,56 @@
 import PlayersHeaderItem from './PlayersHeaderItem.vue';
 
 export default {
-    name: 'PlayersHeader',
+  name: 'PlayersHeader',
 
-    components: {
-        PlayersHeaderItem,
+  components: {
+    PlayersHeaderItem,
+  },
+
+  computed: {
+    players() {
+      return this.$store.state.players;
     },
 
-    computed: {
-        players() {
-            return this.$store.state.players;
-        },
-
-        activePlayer() {
-            return this.$store.getters.activePlayer;
-        },
-
-        numberOfPlayers() {
-            return this.$store.getters.numberOfPlayers;
-        },
-
-        splitPlayers() {
-            let result;
-
-            if (this.numberOfPlayers > 2) {
-                result = [[], []];
-            } else {
-                return this.players;
-            }
-
-            for (let i = 0, j = 0; i < this.numberOfPlayers; i++) {
-                if (i < Math.round(this.numberOfPlayers / 2)) {
-                    result[0][i] = this.players[i];
-                } else {
-                    result[1][j] = this.players[i];
-                    j++;
-                }
-            }
-
-            return result;
-        },
-
-        numberOfColumns() {
-            return this.numberOfPlayers > 2 ? 2 : 1;
-        },
+    activePlayer() {
+      return this.$store.getters.activePlayer;
     },
 
-    methods: {
-        columnClass(index) {
-            let classes = this.numberOfColumns == 2 ? 'col-6' : 'col-12';
-            return index == 0 ? classes.concat(' pr-1') : classes.concat(' pl-1');
-        },
+    numberOfPlayers() {
+      return this.$store.getters.numberOfPlayers;
     },
+
+    splitPlayers() {
+      let result;
+
+      if (this.numberOfPlayers > 2) {
+        result = [[], []];
+      } else {
+        return this.players;
+      }
+
+      for (let i = 0, j = 0; i < this.numberOfPlayers; i++) {
+        if (i < Math.round(this.numberOfPlayers / 2)) {
+          result[0][i] = this.players[i];
+        } else {
+          result[1][j] = this.players[i];
+          j++;
+        }
+      }
+
+      return result;
+    },
+
+    numberOfColumns() {
+      return this.numberOfPlayers > 2 ? 2 : 1;
+    },
+  },
+
+  methods: {
+    columnClass(index) {
+      let classes = this.numberOfColumns == 2 ? 'col-6' : 'col-12';
+      return index == 0 ? classes.concat(' pr-1') : classes.concat(' pl-1');
+    },
+  },
 }
 </script>

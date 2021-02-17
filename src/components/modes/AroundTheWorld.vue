@@ -1,33 +1,53 @@
 <template>
   <div>
     <ScoreButtonsLine
-      :scoreButtonNumbers="createButtonLine([1, 2, 3, 4])"
+      :scoreButtonNumbers="createButtonLine([1, 2, 3])"
       @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-      :scoreButtonNumbers="createButtonLine([5, 6, 7, 8])"
+      :scoreButtonNumbers="createButtonLine([4, 5, 6])"
       @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-      :scoreButtonNumbers="createButtonLine([9, 10, 11, 12])"
+      :scoreButtonNumbers="createButtonLine([7, 8, 9])"
       @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-      :scoreButtonNumbers="createButtonLine([13, 14, 15, 16])"
+      :scoreButtonNumbers="createButtonLine([10, 11, 12])"
       @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-      :scoreButtonNumbers="createButtonLine([17, 18, 19, 20])"
+      :scoreButtonNumbers="createButtonLine([13, 14, 15])"
       @scoreButtonClicked="scoreButtonClicked"
     />
     <ScoreButtonsLine
-      :scoreButtonNumbers="[{
+      :scoreButtonNumbers="createButtonLine([16, 17, 18])"
+      @scoreButtonClicked="scoreButtonClicked"
+    />
+    <ScoreButtonsLine
+      :scoreButtonNumbers="[
+        {
+          name: '19',
+          value: 19,
+          disabled: (this.activePlayerScore+1 !== 19 || this.clickCount === 3),
+          done: (this.activePlayerScore >= 19),
+          active: !(this.activePlayerScore+1 !== 19|| this.clickCount === 3),
+        },
+        {
+          name: '20',
+          value: 20,
+          disabled: (this.activePlayerScore+1 !== 20 || this.clickCount === 3),
+          done: (this.activePlayerScore >= 20),
+          active: !(this.activePlayerScore+1 !== 20|| this.clickCount === 3),
+        },
+        {
           name: 'Bull',
           value: 21,
           disabled: (this.activePlayerScore+1 !== 21 || this.clickCount === 3),
           done: (this.activePlayerScore >= 21),
           active: !(this.activePlayerScore+1 !== 21|| this.clickCount === 3),
-        }]"
+        }
+      ]"
       @scoreButtonClicked="scoreButtonClicked"
     />
 

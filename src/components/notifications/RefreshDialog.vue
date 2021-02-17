@@ -14,37 +14,37 @@
 
 <script>
 export default {
-    name: 'RefreshDialog',
+  name: 'RefreshDialog',
 
-    data() {
-        return {
-            prompt: false,
-        };
-    },
+  data() {
+    return {
+      prompt: false,
+    };
+  },
 
-    created() {
-        if (this.$workbox) {
-            this.$workbox.addEventListener("waiting", () => {
-                this.prompt = true;
-            });
-            this.$workbox.addEventListener("isUpdate", () => {
-                this.prompt = true;
-            });
-            this.$workbox.addEventListener("waiting", () => {
-                this.prompt = true;
-            });
-            this.$workbox.addEventListener("externalwaiting", () => {
-                this.prompt = true;
-            });
-        }
-    },
+  created() {
+    if (this.$workbox) {
+      this.$workbox.addEventListener("waiting", () => {
+        this.prompt = true;
+      });
+      this.$workbox.addEventListener("isUpdate", () => {
+        this.prompt = true;
+      });
+      this.$workbox.addEventListener("waiting", () => {
+        this.prompt = true;
+      });
+      this.$workbox.addEventListener("externalwaiting", () => {
+        this.prompt = true;
+      });
+    }
+  },
 
-    methods: {
-        async refresh() {
-            this.prompt = false;
-            await this.$workbox.messageSW({ type: "SKIP_WAITING" });
-        },
+  methods: {
+    async refresh() {
+      this.prompt = false;
+      await this.$workbox.messageSW({ type: "SKIP_WAITING" });
     },
+  },
 }
 </script>
 

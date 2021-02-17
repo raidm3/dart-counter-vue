@@ -11,7 +11,7 @@ describe('ScoreButton.vue', () => {
           disabled: true,
         },
         scoreMultiplier: 1,
-       },
+      },
     });
 
     expect(

@@ -6,25 +6,25 @@
 
 <script>
 export default {
-    name: 'Snackbar',
+  name: 'Snackbar',
 
-    data() {
-        return {
-            showSnackbar: false,
-            message: '',
-        };
+  data() {
+    return {
+      showSnackbar: false,
+      message: '',
+    };
+  },
+
+  methods: {
+    async show(message, milliseconds = 3000) {
+      this.message = message;
+      this.showSnackbar = true;
+
+      await setTimeout(() => {
+        this.showSnackbar = false;
+      }, milliseconds);
     },
-
-    methods: {
-        async show(message, milliseconds = 3000) {
-            this.message = message;
-            this.showSnackbar = true;
-
-            await setTimeout(() => {
-                this.showSnackbar = false;
-            }, milliseconds);
-        },
-    },
+  },
 }
 </script>
 

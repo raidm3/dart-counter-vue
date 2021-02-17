@@ -42,7 +42,7 @@
                             :key="player.id"
                         >
                             <th class="border-right" colspan="1" scope="row">{{ player.name }}</th>
-                            <td>{{ calculateAverageScore(player.score, player.rounds) }}</td>
+                            <td>⌀ {{ player.average }}</td>
                             <td>{{ getHighShotOfPlayer(player.id, 'sixty') }}x</td>
                             <td>{{ getHighShotOfPlayer(player.id, 'hundred') }}x</td>
                         </tr>
@@ -53,15 +53,9 @@
         <div class="mx-2">
             <button
                 class="btn btn-lg btn-primary btn-block"
-                @click="rematch"
-            >
-                <b>Rematch</b>
-            </button>
-            <button
-                class="btn btn-lg btn-secondary btn-block"
                 @click="backToHome"
             >
-                <b>Back to Home</b>
+                <b>Play Again!</b>
             </button>
         </div>
     </div>
@@ -69,72 +63,55 @@
 
 <script>
 export default {
-    name: 'Victory',
+  name: 'Victory',
 
-    computed: {
-        winner() {
-            return this.$store.getters.winner;
-        },
+  computed: {
+    winner() {
+      return this.$store.getters.winner;
+    },
         
-        winnerName() {
-            return this.winner.name;
-        },
-
-        currentRound() {
-            return this.$store.getters.currentRound;
-        },
-
-        highscore() {
-            return this.$store.getters.highscore;
-        },
-
-        highscorePlayer() {
-            return this.$store.getters.getPlayerById(this.highscore.playerId);
-        },
-
-        activeGameMode() {
-            return this.$store.getters.activeGameMode;
-        },
-
-        activeGameType() {
-            return this.activeGameMode.type;
-        },
-
-        players() {
-            return this.$store.state.players;
-        },
-
-        highShots() {
-            return this.$store.state.stats.highShots;
-        },
+    winnerName() {
+      return this.winner.name;
     },
 
-    methods: {
-        calculateAverageScore(score, rounds) {
-            return Math.round((this.activeGameMode.score - score) / rounds * 100) / 100;
-        },
-
-        getHighShotOfPlayer(id, type) {
-            return this.highShots[type].find(shot => shot.playerId == id).count;
-        },
-
-        backToHome() {
-            this.$router.push({ name: 'home' });
-        },
-
-        rematch() {
-            const playerNames = this.$store.state.players.map(player => {
-                return { id: player.id, name: player.name };
-            });
-            const gameMode = this.$store.getters.activeGameMode;
-
-            this.$store.dispatch('startGame', {
-                names: playerNames,
-                mode: gameMode,
-            });
-            this.$router.push({ name: 'play', params: { mode: gameMode.name } });
-        },
+    currentRound() {
+      return this.$store.getters.currentRound;
     },
+
+    highscore() {
+      return this.$store.getters.highscore;
+    },
+
+    highscorePlayer() {
+      return this.$store.getters.getPlayerById(this.highscore.playerId);
+    },
+
+    activeGameMode() {
+      return this.$store.getters.activeGameMode;
+    },
+
+    activeGameType() {
+      return this.activeGameMode.type;
+    },
+
+    players() {
+      return this.$store.state.players;
+    },
+
+    highShots() {
+      return this.$store.state.stats.highShots;
+    },
+  },
+
+  methods: {
+    getHighShotOfPlayer(id, type) {
+      return this.highShots[type].find(shot => shot.playerId == id).count;
+    },
+
+    backToHome() {
+      this.$router.push({ name: 'home' });
+    },
+  },
 }
 </script>
 

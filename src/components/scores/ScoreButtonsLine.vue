@@ -4,7 +4,7 @@
             v-for="(number, index) in scoreButtonNumbers"
             :key="index"
             :class="`col-${numberOfColumns}`"
-            class="px-1"
+            class="px-2"
         >
             <ScoreButton
                 :number="number"
@@ -18,28 +18,28 @@
 import ScoreButton from './ScoreButton';
 
 export default {
-    name: 'ScoreButtonsLine',
+  name: 'ScoreButtonsLine',
 
-    components: {
-        ScoreButton,
+  components: {
+    ScoreButton,
+  },
+
+  props: {
+    scoreButtonNumbers: {
+      type: Array,
+      required: true,
     },
 
-    props: {
-        scoreButtonNumbers: {
-            type: Array,
-            required: true,
-        },
-
-        scoreMultiplier: {
-            type: Number,
-            default: 1,
-        },
+    scoreMultiplier: {
+      type: Number,
+      default: 1,
     },
+  },
 
-    computed: {
-        numberOfColumns() {
-            return 12 / this.scoreButtonNumbers.length;
-        },
+  computed: {
+    numberOfColumns() {
+      return 12 / this.scoreButtonNumbers.length;
     },
+  },
 }
 </script>

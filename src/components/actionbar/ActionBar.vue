@@ -14,7 +14,7 @@
         </button>
       </div>
     </div>
-    <div class="row m-1">
+    <div class="row mx-1 my-2">
       <div class="col-6">
         <button class="btn btn-block btn-link" @click="quitGame">
           <font-awesome-icon class="mr-2" :icon="['fas', 'arrow-left']" />

@@ -1,5 +1,7 @@
 # dart-counter-vue
 
+Website: [Darts Counter](https://dart-counter-ac001.firebaseapp.com)
+
 ## Project setup
 ```
 yarn install

@@ -152,114 +152,121 @@
 import draggable from 'vuedraggable';
 
 export default {
-    name: 'Home',
+  name: 'Home',
 
-    components: {
-        draggable,
+  components: {
+    draggable,
+  },
+
+  data() {
+    return {
+      playerNames: [ { id: 1, name: 'Player 1' } ],
+      newPlayer: '',
+      newPlayerId: 2,
+      isDragging: false,
+    };
+  },
+
+  computed: {
+    gameModes() {
+      return this.$store.state.gameModes;
     },
 
-    data() {
-        return {
-            playerNames: [ { id: 1, name: 'Player 1' } ],
-            newPlayer: '',
-            newPlayerId: 2,
-            isDragging: false,
-        };
+    gameOptions: {
+      get() {
+        return this.activeGameMode.option;
+      },
+
+      set(option) {
+        this.$store.dispatch('setGameOption', option);
+      }
     },
 
-    computed: {
-        gameModes() {
-            return this.$store.state.gameModes;
-        },
-
-        gameOptions: {
-            get() {
-                return this.activeGameMode.option;
-            },
-
-            set(option) {
-                this.$store.dispatch('setGameOption', option);
-            }
-        },
-
-        activeGameMode() {
-            return this.$store.getters.activeGameMode;
-        },
-
-        activeGameModeId() {
-            return this.activeGameMode.id;
-        },
-
-        activeGameModeName() {
-            return this.activeGameMode.name;
-        },
-
-        activeGameModeType() {
-            return this.activeGameMode.type;
-        },
-
-        dragOptions() {
-            return {
-                animation: 200,
-                group: "description",
-                disabled: false,
-                ghostClass: "ghost"
-            };
-        },
+    activeGameMode() {
+      return this.$store.getters.activeGameMode;
     },
 
-    methods: {
-        selectGameMode(id) {
-            // Check if Cricket has been selected to disable player add/remove functionality
-            if (id === 5) {
-                this.playerNames = [
-                    { id: 1, name: 'Player 1' },
-                    { id: 2, name: 'Player 2' }
-                ];
-                this.newPlayerId++;
-            }
-            this.$store.dispatch('setActiveGameMode', id);
-        },
-
-        startGame() {
-            this.$store.dispatch('startGame', {
-                names: this.playerNames,
-                mode: this.activeGameMode,
-                option: this.gameOptions,
-            });
-
-            this.$router.push({ name: 'play', params: { mode: this.activeGameModeType } });
-        },
-
-        addNewPlayer() {
-            if (this.playerNames.length >= 4) {
-                return;
-            }
-
-            if (this.newPlayer === '') {
-                this.playerNames.push({ id: this.newPlayerId++, name: `Player ${this.playerNames.length+1}` });
-            } else {
-                this.playerNames.push({ id: this.newPlayerId++, name: this.newPlayer });
-            }
-
-            this.newPlayer = '';
-        },
-
-        removePlayer(index) {
-            if (index > -1 && this.playerNames.length > 1) {
-                this.playerNames.splice(index, 1);
-            }
-        },
-
-        preSelectText(event) {
-            event.target.focus();
-            event.target.setSelectionRange(0, event.target.value.length);
-        },
+    activeGameModeId() {
+      return this.activeGameMode.id;
     },
 
-    mounted() {
-        this.$store.dispatch('setActiveGameMode', 1);
+    activeGameModeName() {
+      return this.activeGameMode.name;
     },
+
+    activeGameModeType() {
+      return this.activeGameMode.type;
+    },
+
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+      };
+    },
+  },
+
+  methods: {
+    selectGameMode(id) {
+      // Check if Cricket has been selected to disable player add/remove functionality
+      if (id === 5) {
+        this.playerNames = [
+          { id: 1, name: 'Player 1' },
+          { id: 2, name: 'Player 2' }
+        ];
+        this.newPlayerId++;
+      }
+      this.$store.dispatch('setActiveGameMode', id);
+    },
+
+    startGame() {
+      this.$store.dispatch('startGame', {
+        names: this.playerNames,
+        mode: this.activeGameMode,
+        option: this.gameOptions,
+      });
+
+      this.$router.push({ name: 'play', params: { mode: this.activeGameModeType } });
+    },
+
+    addNewPlayer() {
+      if (this.playerNames.length >= 4) {
+        return;
+      }
+
+      if (this.newPlayer === '') {
+        this.playerNames.push({ id: this.newPlayerId++, name: `Player ${this.playerNames.length+1}` });
+      } else {
+        this.playerNames.push({ id: this.newPlayerId++, name: this.newPlayer });
+      }
+
+      this.newPlayer = '';
+    },
+
+    removePlayer(index) {
+      if (index > -1 && this.playerNames.length > 1) {
+        this.playerNames.splice(index, 1);
+      }
+    },
+
+    preSelectText(event) {
+      event.target.focus();
+      event.target.setSelectionRange(0, event.target.value.length);
+    },
+  },
+
+  mounted() {
+    const players = this.$store.getters.getPlayers;
+
+    if (players.length > 0) {
+      this.playerNames = players.map(player => ({ id: player.id, name: player.name }));
+      this.newPlayerId = players.length+1;
+    }
+
+    this.$store.dispatch('setActiveGameMode', this.activeGameModeId);
+  },
 }
 </script>
 

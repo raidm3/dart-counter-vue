@@ -21,33 +21,33 @@
 
 <script>
 export default {
-    name: 'ScoreButton',
+  name: 'ScoreButton',
 
-    props: {
-        number: {
-            type: Object,
-            required: true,
-        },
+  props: {
+    number: {
+      type: Object,
+      required: true,
+    },
 
-        scoreMultiplier: {
-            type: Number,
-            default: 1,
-        },
+    scoreMultiplier: {
+      type: Number,
+      default: 1,
+    },
         
-        big: {
-            type: Boolean,
-            default: true,
-        },
+    big: {
+      type: Boolean,
+      default: true,
     },
+  },
 
-    methods: {
-        numberClicked() {
-            this.$emit('scoreButtonClicked', {
-                number : this.number,
-                multiplier: this.scoreMultiplier,
-            });
-        },
+  methods: {
+    numberClicked() {
+      this.$emit('scoreButtonClicked', {
+        number : this.number,
+        multiplier: this.scoreMultiplier,
+      });
     },
+  },
 }
 </script>
 

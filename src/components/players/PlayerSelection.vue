@@ -64,60 +64,60 @@
 import draggable from 'vuedraggable';
 
 export default {
-    name: 'PlayerSelection',
+  name: 'PlayerSelection',
 
-    components: {
-        draggable,
-    },
+  components: {
+    draggable,
+  },
 
-    data() {
-        return {
-            playerNames: ['Player 1'],
-            newPlayer: '',
-            isDragging: false,
-        };
-    },
+  data() {
+    return {
+      playerNames: ['Player 1'],
+      newPlayer: '',
+      isDragging: false,
+    };
+  },
 
-    computed: {
-        players: {
-            get() {
-                return this.playerNames;
-            },
-            set(value) {
+  computed: {
+    players: {
+      get() {
+        return this.playerNames;
+      },
+      set(value) {
                 console.log('i was here'); //eslint-disable-line
-                this.playerNames = value;
-                this.$emit('playersUpdated', this.playerNames);
-            },
-        },
-        dragOptions() {
-            return {
-                animation: 200,
-                group: "description",
-                disabled: false,
-                ghostClass: "ghost"
-            };
-        }
+        this.playerNames = value;
+        this.$emit('playersUpdated', this.playerNames);
+      },
+    },
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+      };
+    }
+  },
+
+  methods: {
+    addNewPlayer() {
+      if (!this.newPlayer) {
+        return;
+      }
+      this.playerNames.push(this.newPlayer);
+      this.newPlayer = '';
     },
 
-    methods: {
-        addNewPlayer() {
-            if (!this.newPlayer) {
-                return;
-            }
-            this.playerNames.push(this.newPlayer);
-            this.newPlayer = '';
-        },
-
-        removePlayer(index) {
-            if (index > -1) {
-                this.playerNames.splice(index, 1);
-            }
-        },
-
-        preSelectText(event) {
-            event.target.setSelectionRange(0, event.target.value.length);
-        },
+    removePlayer(index) {
+      if (index > -1) {
+        this.playerNames.splice(index, 1);
+      }
     },
+
+    preSelectText(event) {
+      event.target.setSelectionRange(0, event.target.value.length);
+    },
+  },
 };
 </script>
 

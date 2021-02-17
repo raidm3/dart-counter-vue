@@ -9,14 +9,14 @@ import Victory from '../components/pages/Victory.vue';
 Vue.use(VueRouter);
 
 export default function createRouter() {
-    const routes = [
-        { path: '', name: 'home', component: Home },
-        { path: '/play/:mode', name: 'play', component: Play },
-        { path: '/victory', name: 'victory', component: Victory },
-      ];
+  const routes = [
+    { path: '', name: 'home', component: Home },
+    { path: '/play/:mode', name: 'play', component: Play },
+    { path: '/victory', name: 'victory', component: Victory },
+  ];
 
-    return new VueRouter({
-        routes,
-        mode: 'history',
-      });
+  return new VueRouter({
+    routes,
+    mode: 'history',
+  });
 }

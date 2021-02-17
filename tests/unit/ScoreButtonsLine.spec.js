@@ -21,7 +21,7 @@ describe('ScoreButtonsLine.vue', () => {
           },
         ],
         scoreMultiplier: 1,
-       },
+      },
     });
 
     expect(

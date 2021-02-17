@@ -10,7 +10,7 @@
         <div
           v-for="hit in players[0].hits"
           :key="hit.id"
-          style="height: 38px; margin-bottom: 8px; padding: 5px 0 5px 56px;"
+          style="height: 48px; margin-bottom: 8px; padding: 5px 0 15px 56px;"
         >
            <div
             class="inning"
@@ -31,7 +31,6 @@
             disabled: isScoreClosed(hit.id) || scores.length === 3 ||
               (hit.id === 25 && scoreMultiplier === 3)
           }"
-          :big="false"
           :scoreMultiplier="scoreMultiplier"
           @scoreButtonClicked="setHit"
         />
@@ -40,7 +39,7 @@
         <div
           v-for="hit in players[1].hits"
           :key="hit.id"
-          style="height: 38px; margin-bottom: 8px; padding: 5px 56px 5px 0;"
+          style="height: 48px; margin-bottom: 8px; padding: 5px 56px 15px 0;"
         >
            <div
             class="inning"
@@ -205,8 +204,8 @@ export default {
     nextPlayer() {
       // Add score to player score
       this.$store.dispatch('setPlayerScore', {
-          score: this.activePlayerScore,
-          activePlayerId: this.activePlayerId,
+        score: this.activePlayerScore,
+        activePlayerId: this.activePlayerId,
       });
 
       // Check winning conditions and finish game if fulfilled
@@ -248,8 +247,8 @@ export default {
 .inning {
   margin: auto;
   position: relative;
-  width: 28px;
-  height: 28px;
+  width: 38px;
+  height: 38px;
   opacity: 0.7;;
 }
 .circle {
@@ -261,9 +260,9 @@ export default {
 }
 .firstLine:before {
   position: absolute;
-  left: 11px;
+  left: 16px;
   content: ' ';
-  height: 25px;
+  height: 35px;
   width: 2px;
   background-color: #333;
 }
@@ -275,9 +274,9 @@ export default {
 }
 .secondLine:after {
   position: absolute;
-  left: 11px;
+  left: 16px;
   content: ' ';
-  height: 25px;
+  height: 35px;
   width: 2px;
   background-color: #333;
 }
