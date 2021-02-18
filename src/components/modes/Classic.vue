@@ -61,6 +61,7 @@
       :currentRound="currentRound"
       @accept="setPlayerScore"
       @undo="undoLastShot"
+      @scoreRecorded="onScoreRecorded"
     />
 
     <Snackbar ref="snackbar"/>
@@ -230,6 +231,12 @@ export default {
 
     undoLastShot() {
       this.scores.pop();
+    },
+
+    onScoreRecorded(event) {
+      if (this.scores.length < 3) {
+        this.scores.push(event);
+      }
     },
 
     setScoreMultiplier(event) {

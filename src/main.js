@@ -14,6 +14,8 @@ import {
   faCheck,
   faUndo,
   faTrophy,
+  faMicrophone,
+  faStopCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -38,6 +40,8 @@ library.add(
   faCheck,
   faUndo,
   faTrophy,
+  faMicrophone,
+  faStopCircle,
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
