@@ -1,6 +1,6 @@
 <template>
-    <div id="snackbar" :class="{'show': showSnackbar}">
-        {{ message }}
+    <div class="snackbar" :class="{'show': showSnackbar}">
+        <span class="font-weight-bold">{{ message }}</span>
     </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-#snackbar {
+.snackbar {
     visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
@@ -44,7 +44,7 @@ export default {
     bottom: 30px;
 }
 
-#snackbar.show {
+.snackbar.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
