@@ -21,7 +21,10 @@
           <b>Quit Game</b>
         </button>
       </div>
-      <div class="col-4 mt-2">
+      <div
+        v-if="gameMode.type === 'Classic'" 
+        class="col-4 mt-2"
+      >
         <button
           v-if="!recordingActive"
           class="btn btn-secondary btn-block btn-lg"
@@ -74,7 +77,7 @@ export default {
 
   mounted() {
     if (window.hasOwnProperty('webkitSpeechRecognition')) {
-      const grammar = '#JSGF V1.0; grammar numbers; public <number> = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 ;'
+      const grammar = '#JSGF V1.0; grammar numbers; public <number> = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;'
       const speechRecognitionList = new window.webkitSpeechGrammarList();
       speechRecognitionList.addFromString(grammar, 10);
       this.recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
@@ -121,6 +124,12 @@ export default {
         console.log('Error occurred in recognition: ' + event.error);
       }
     }
+  },
+
+  computed: {
+    gameMode() {
+      return this.$store.getters.activeGameMode;
+    },
   },
 
   methods: {

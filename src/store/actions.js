@@ -12,16 +12,17 @@ export default {
   },
 
   setPlayerScore({ commit, getters }, payload) {
+    const { countRound = true } = payload;
+
     if (getters.activeGameMode.type === 'Classic') {
       commit('substractPlayerScore', {
         currentRound: getters.currentRound,
         gameModeScore: getters.activeGameMode.score,
         ...payload
       });
-      commit('countRound', payload);
-            
-      if (payload.score >= 60) {
-        commit('countHighShots', payload);
+      
+      if (countRound) {
+        commit('countRound', payload);
       }
     }
 
@@ -32,10 +33,15 @@ export default {
     if (getters.activeGameMode.type === 'Cricket') {
       commit('setPlayerScore', payload);
     }
+  },
 
-    if (getters.highscore.score < payload.score) {
-      commit('setHighScore', payload);
-    }
+  addScore({ commit }, score) {
+    commit('addScore', score);
+  },
+
+  undoLastScore({ commit }) {
+    commit('undoLastScore');
+    commit('setPreviousPlayer');
   },
 
   setWinner({ commit }, playerId) {
@@ -44,6 +50,7 @@ export default {
 
   startGame({ commit }, payload) {
     commit('resetStats');
+    commit('resetScores');
     commit('startGame', payload);
   },
 

@@ -20,6 +20,18 @@ export default {
     }
   },
 
+  setPreviousPlayer(state) {
+    const currentActivePlayerId = state.players.find(player => player.active).id;
+    state.players.map(player => player.active = false);
+        
+    if (currentActivePlayerId == 1) {
+      state.players.find(player => player.id == state.players.length).active = true;
+      state.stats.rounds--;
+    } else {
+      state.players.find(player => player.id == currentActivePlayerId-1).active = true;
+    }
+  },
+
   startGame(state, payload) {
     state.players = [];
 
@@ -28,19 +40,8 @@ export default {
         id: index+1,
         name: payload.names[index].name,
         score: payload.mode.score,
-        average: 0,
         active: index == 0 ? true : false,
         winner: false,
-      });
-
-      state.stats.highShots.sixty.push({
-        playerId: index+1,
-        count: 0,
-      });
-
-      state.stats.highShots.hundred.push({
-        playerId: index+1,
-        count: 0,
       });
     }
 
@@ -51,7 +52,6 @@ export default {
   substractPlayerScore(state, payload) {
     const player = state.players.find(player => player.id == payload.activePlayerId);
     player.score -= payload.score;
-    player.average = Math.round((payload.gameModeScore - player.score) / payload.currentRound * 10) / 10;
   },
 
   addPlayerScore(state, payload) {
@@ -62,6 +62,19 @@ export default {
   setPlayerScore(state, payload) {
     const player = state.players.find(player => player.id == payload.activePlayerId);
     player.score = payload.score;
+  },
+
+  addScore(state, payload) {
+    state.scores.push(payload);
+  },
+
+  undoLastScore(state) {
+    let score = state.scores.pop();
+
+    this.commit('addPlayerScore', {
+      activePlayerId: score.playerId, 
+      score: score.scoreSum,
+    });
   },
 
   setWinner(state, playerId) {
@@ -76,11 +89,10 @@ export default {
 
   resetStats(state) {
     state.stats.rounds = 1;
-    state.stats.highscore = { score: 0, playerId: 0 };
-    state.stats.highShots = {
-      sixty: [],
-      hundred: [],
-    }
+  },
+
+  resetScores(state) {
+    state.scores = [];
   },
 
   setCheckoutHint(state, hint) {
@@ -94,22 +106,6 @@ export default {
       player.rounds++;
     } else {
       player.rounds = 1;
-    }
-  },
-
-  countHighShots(state, payload) {
-    const highShots = state.stats.highShots;
-
-    if (payload.score >= 60 && payload.score < 100) {
-      highShots.sixty.find(
-        playerStats => playerStats.playerId == payload.activePlayerId
-      ).count++;
-    }
-
-    if (payload.score >= 100) {
-      highShots.hundred.find(
-        playerStats => playerStats.playerId == payload.activePlayerId
-      ).count++;
     }
   },
 };

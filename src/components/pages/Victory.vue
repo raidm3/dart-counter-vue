@@ -1,64 +1,68 @@
 <template>
-    <div>
-        <div class="alert alert-success" role="alert">
-            <font-awesome-icon class="h1" :icon="['fas', 'trophy']" />
-            <h5 class="alert-heading">Victory!</h5>
-            <h3 class="font-weight-bold">
-                {{ winnerName }}
-            </h3>
+  <div>
+    <div class="alert alert-success" role="alert">
+      <font-awesome-icon class="h1" :icon="['fas', 'trophy']" />
+      <h5 class="alert-heading">
+        Victory!
+      </h5>
+      <h3 class="font-weight-bold">
+        {{ winnerName }}
+      </h3>
 
-            <div v-if="activeGameType !== 'Classic'">
-                <span v-for="player in players" :key="player.id">
-                    <span>{{ player.name }}:</span>
-                    <span class="font-weight-bold pl-2">{{ player.score }} Points</span>
-                    <br/>
-                </span>
-            </div>
+      <div v-if="activeGameType !== 'Classic'">
+        <span v-for="player in players" :key="player.id">
+          <span>{{ player.name }}:</span>
+          <span class="font-weight-bold pl-2">{{ player.score }} Points</span>
+          <br/>
+        </span>
+      </div>
 
-            <hr>
+      <hr>
 
-            <h5>Stats</h5>
-            <p class="mb-1">
-                Game has been finished in <b>Round {{ currentRound }}</b>
-            </p>
-            <div v-if="activeGameType === 'Classic'" class="mb-1">
-                Best shot was <b>{{ highscore.score }}</b> from <b>{{ highscorePlayer.name }}</b>
+      <h5>Stats</h5>
+      <p class="mb-1">
+        Game has been finished in <b>Round {{ currentRound }}</b>
+      </p>
+      <div v-if="activeGameType === 'Classic'" class="mb-1">
+        Best shot was <b>{{ highscore.score }}</b> from <b>{{ highscorePlayer.name }}</b>
 
-                <hr>
+        <hr>
 
-                <span class="h5 d-block mt-2">Points</span>
-                <table class="table table-borderless table-sm text-white">
-                    <thead>
-                        <tr class="border-bottom">
-                            <th class="border-right" colspan="1" scope="col"></th>
-                            <th scope="col">&#8960; Score</th>
-                            <th scope="col">60+</th>
-                            <th scope="col">100+</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            v-for="player in players"
-                            :key="player.id"
-                        >
-                            <th class="border-right" colspan="1" scope="row">{{ player.name }}</th>
-                            <td>⌀ {{ player.average }}</td>
-                            <td>{{ getHighShotOfPlayer(player.id, 'sixty') }}x</td>
-                            <td>{{ getHighShotOfPlayer(player.id, 'hundred') }}x</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="mx-2">
-            <button
-                class="btn btn-lg btn-primary btn-block"
-                @click="backToHome"
+        <span class="h5 d-block mt-2">Points</span>
+        <table class="table table-borderless table-sm text-white">
+          <thead>
+            <tr class="border-bottom">
+              <th class="border-right" colspan="1" scope="col"></th>
+              <th scope="col">Average</th>
+              <th scope="col">60+</th>
+              <th scope="col">100+</th>
+              <th scope="col">140+</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="player in players"
+              :key="player.id"
             >
-                <b>Play Again!</b>
-            </button>
-        </div>
+              <th class="border-right" colspan="1" scope="row">{{ player.name }}</th>
+              <td>⌀ {{ getPlayerAverage(player.id) }}</td>
+              <td>{{ getHighShotOfPlayer(player.id, 60, 99) }}x</td>
+              <td>{{ getHighShotOfPlayer(player.id, 100, 139) }}x</td>
+              <td>{{ getHighShotOfPlayer(player.id, 140, 180) }}x</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mx-2">
+        <button
+          class="btn btn-lg btn-warning btn-block"
+          @click="backToHome"
+        >
+          <b>Play Again!</b>
+        </button>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -79,7 +83,19 @@ export default {
     },
 
     highscore() {
-      return this.$store.getters.highscore;
+      const scores = this.$store.state.scores;
+      const highscore = scores.reduce((prev, cur) => {
+        const score = prev.scoreSum > cur.scoreSum ? prev : cur;
+        return {
+          scoreSum: score.scoreSum,
+          playerId: score.playerId,
+        };
+      });
+
+      return {
+        score: highscore.scoreSum,
+        playerId: highscore.playerId,
+      };
     },
 
     highscorePlayer() {
@@ -97,15 +113,15 @@ export default {
     players() {
       return this.$store.state.players;
     },
-
-    highShots() {
-      return this.$store.state.stats.highShots;
-    },
   },
 
   methods: {
-    getHighShotOfPlayer(id, type) {
-      return this.highShots[type].find(shot => shot.playerId == id).count;
+    getHighShotOfPlayer(id, min, max) {
+      return this.$store.getters.getHighshotsByIdAndValue(id, min, max).length;
+    },
+
+    getPlayerAverage(id) {
+      return this.$store.getters.getPlayerAverageById(id);
     },
 
     backToHome() {
