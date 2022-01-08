@@ -9,6 +9,11 @@
         {{ winnerName }}
       </h3>
 
+      <div v-if="tournamentMode">
+        <span class="d-block">Sets</span>
+        <span class="d-block">{{ players[0].sets }} - {{ players[1].sets }}</span>
+      </div>
+
       <div v-if="activeGameType !== 'Classic'">
         <span v-for="player in players" :key="player.id">
           <span>{{ player.name }}:</span>
@@ -19,7 +24,6 @@
 
       <hr>
 
-      <h5>Stats</h5>
       <p class="mb-1">
         Game has been finished in <b>Round {{ currentRound }}</b>
       </p>
@@ -28,7 +32,7 @@
 
         <hr>
 
-        <span class="h5 d-block mt-2">Points</span>
+        <span class="h5 d-block mt-2">Stats</span>
         <table class="table table-borderless table-sm text-white">
           <thead>
             <tr class="border-bottom">
@@ -58,7 +62,7 @@
           class="btn btn-lg btn-warning btn-block"
           @click="backToHome"
         >
-          <b>Play Again!</b>
+          <b>GG WP!</b>
         </button>
       </div>
     </div>
@@ -108,6 +112,10 @@ export default {
 
     activeGameType() {
       return this.activeGameMode.type;
+    },
+
+    tournamentMode() {
+      return this.activeGameMode.tournament;
     },
 
     players() {

@@ -48,10 +48,18 @@ export default {
     commit('setWinner', playerId);
   },
 
+  setWinnerLegs({ commit }, playerId) {
+    commit('setWinnerLegs', playerId);
+  },
+
   startGame({ commit }, payload) {
     commit('resetStats');
     commit('resetScores');
     commit('startGame', payload);
+  },
+
+  nextGameRound({ commit, getters }) {
+    commit('nextGameRound', getters.activeGameMode);
   },
 
   setCheckoutHint({ commit }, hint) {

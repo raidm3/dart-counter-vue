@@ -41,12 +41,24 @@ export default {
         name: payload.names[index].name,
         score: payload.mode.score,
         active: index == 0 ? true : false,
+        started: index == 0 ? true : false,
         winner: false,
+        sets: 0,
+        legs: 0,
       });
     }
 
     // reset checkout hint
     state.checkoutHint = {};
+  },
+
+  nextGameRound(state, activeGameMode) {
+    state.players.forEach((player) => {
+      player.score = activeGameMode.score;
+      player.active = !player.started;
+      player.started = !player.started;
+      player.rounds = 0;
+    });
   },
 
   substractPlayerScore(state, payload) {
@@ -80,6 +92,23 @@ export default {
   setWinner(state, playerId) {
     const player = state.players.find(player => player.id == playerId);
     player.winner = true;
+  },
+
+  setWinnerLegs(state, playerId) {
+    const player = state.players.find(player => player.id == playerId);
+    player.legs = player.legs + 1;
+
+    if (player.legs === 3) {
+      player.sets = player.sets + 1;
+
+      state.players.forEach((player) => {
+        player.legs = 0;
+      });
+    }
+
+    if (player.sets === 3) {
+      this.commit('setWinner', playerId);
+    }
   },
 
   setHighScore(state, payload) {

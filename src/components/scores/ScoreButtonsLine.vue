@@ -9,6 +9,7 @@
             <ScoreButton
                 :number="number"
                 :scoreMultiplier="scoreMultiplier"
+                :big="bigButtons"
                 @scoreButtonClicked="$emit('scoreButtonClicked', $event)"/>
         </div>
     </div>
@@ -33,6 +34,11 @@ export default {
     scoreMultiplier: {
       type: Number,
       default: 1,
+    },
+
+    bigButtons: {
+      type: Boolean,
+      default: false,
     },
   },
 

@@ -1,10 +1,8 @@
 <template>
 <div>
-    <div class="container bg-info text-white py-2">
+    <div class="container bg-primary text-white py-2">
         <h2 class="display-5 mb-0">
-            <font-awesome-icon :icon="['fas', 'crosshairs']" />
             Darts Counter
-            <font-awesome-icon :icon="['fas', 'crosshairs']" />
         </h2>
     </div>
     <div class="card border-bottom-0">
@@ -34,7 +32,7 @@
 
     <!-- Game Options -->
     <div
-        v-if="this.activeGameModeType === 'Classic'"
+        v-if="this.activeGameModeType === 'Classic' && this.activeGameMode.id !== 4"
         class="card border-bottom-0"
     >
         <div class="card-body">
@@ -87,7 +85,7 @@
                     <button
                         type="button"
                         class="btn btn-success d-flex align-items-center px-3"
-                        :disabled="playerNames.length >= 4 || activeGameModeId === 5"
+                        :disabled="playerNames.length >= 4 || (activeGameModeId === 4 && playerNames.length >= 2) || (activeGameModeId === 6 && playerNames.length >= 2)"
                         @click="addNewPlayer"
                     >
                         <font-awesome-icon :icon="['fas', 'plus']" />
@@ -210,8 +208,8 @@ export default {
 
   methods: {
     selectGameMode(id) {
-      // Check if Cricket has been selected to disable player add/remove functionality
-      if (id === 5) {
+      // Check if Cricket/Tournament has been selected to disable player add/remove functionality
+      if (id === 4 || id === 6) {
         this.playerNames = [
           { id: 1, name: 'Player 1' },
           { id: 2, name: 'Player 2' }

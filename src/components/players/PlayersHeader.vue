@@ -5,13 +5,31 @@
         v-if="numberOfPlayers <= 2"
         class="col-12"
       >
-        <ul class="list-group">
+        <ul
+          v-if="!tournamentMode"
+          class="list-group"
+        >
           <PlayersHeaderItem
             v-for="player in players"
             :key="player.id"
             :playerName="player.name"
             :playerScore="player.score"
             :playerAverage="getPlayerAverage(player.id)"
+            :isActive="activePlayer.id == player.id"
+          />
+        </ul>
+        <ul
+          v-else
+          class="list-group"
+        >
+          <PlayersHeaderItemTournament
+            v-for="player in players"
+            :key="player.id"
+            :playerName="player.name"
+            :playerScore="player.score"
+            :playerAverage="getPlayerAverage(player.id)"
+            :playerSets="player.sets"
+            :playerLegs="player.legs"
             :isActive="activePlayer.id == player.id"
           />
         </ul>
@@ -39,12 +57,14 @@
 
 <script>
 import PlayersHeaderItem from './PlayersHeaderItem.vue';
+import PlayersHeaderItemTournament from './PlayersHeaderItemTournament.vue';
 
 export default {
   name: 'PlayersHeader',
 
   components: {
     PlayersHeaderItem,
+    PlayersHeaderItemTournament,
   },
 
   computed: {
@@ -58,6 +78,10 @@ export default {
 
     numberOfPlayers() {
       return this.$store.getters.numberOfPlayers;
+    },
+
+    tournamentMode() {
+      return this.$store.getters.activeGameMode.tournament;
     },
 
     splitPlayers() {

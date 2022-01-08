@@ -5,7 +5,8 @@
         :class="[
             number.done ? 'btn-dark' : 'btn-outline-dark',
             { 'custom-pulse': number.active },
-            { 'btn-lg': big },
+            { 'btn-lg': !big },
+            { 'custom-btn-big': big },
         ]"
         aria-pressed="false"
         :disabled="number.disabled"
@@ -36,7 +37,7 @@ export default {
         
     big: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
 
@@ -53,9 +54,16 @@ export default {
 
 <style scoped>
 .custom-pulse {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
 	transform: scale(1);
 	animation: pulse 2s infinite;
+}
+
+.custom-btn-big {
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
 }
 
 @keyframes pulse {

@@ -1,78 +1,12 @@
 <template>
   <div>
-    <div v-if="legacyInputMode">
-      <ScoreMultipliers
-        @scoreMultiplierChanged="setScoreMultiplier"
-        :scoreMultiplier="scoreMultiplier"
-      />
-
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([1, 2, 3])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([4, 5, 6])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([7, 8, 9])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([10, 11, 12])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([13, 14, 15])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([16, 17, 18])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([19, 20, 25])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <!-- <ScoreButtonsLine
-        :scoreButtonNumbers="[
-            { name: 'Bull', value: 25, disabled: this.scores.length === 3, done: false, active: false },
-            { name: 'Bulls Eye', value: 50, disabled: this.scores.length === 3, done: false, active: false },
-            { name: 'Classico', value: 26, disabled: this.scores.length === 3, done: false, active: false },
-        ]"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      /> -->
-    </div>
-    <div v-else>
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([1, 2, 3])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([4, 5, 6])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([7, 8, 9])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-      <ScoreButtonsLine
-        :scoreButtonNumbers="createButtonLine([0])"
-        :scoreMultiplier="scoreMultiplier"
-        @scoreButtonClicked="scoreButtonClicked"
-      />
-    </div>
+    <ScoreField
+      :legacyInputMode="legacyInputMode"
+      :scoreMultiplier="scoreMultiplier"
+      :scores="scores"
+      @scoreButtonClicked="scoreButtonClicked"
+      @scoreMultiplierChanged="setScoreMultiplier"
+    />
 
     <ScoreLine
       :scores="scores"
@@ -103,8 +37,7 @@
 </template>
 
 <script>
-import ScoreMultipliers from "../scores/ScoreMultipliers.vue";
-import ScoreButtonsLine from "../scores/ScoreButtonsLine.vue";
+import ScoreField from "../scores/ScoreField.vue";
 import ScoreLine from "../scores/ScoreLine.vue";
 import ActionBar from "../actionbar/ActionBar.vue";
 import Snackbar from "../notifications/SnackBar.vue";
@@ -113,8 +46,7 @@ export default {
   name: 'Classic',
 
   components: {
-    ScoreMultipliers,
-    ScoreButtonsLine,
+    ScoreField,
     ScoreLine,
     ActionBar,
     Snackbar,
@@ -166,21 +98,13 @@ export default {
     currentRound() {
       return this.$store.state.stats.rounds;
     },
+
+    tournamentMode() {
+      return this.$store.getters.activeGameMode.tournament;
+    },
   },
 
   methods: {
-    createButtonLine(ids) {
-      return ids.map(id => {
-        return {
-          name: id === 25 ? 'Bull' : `${id}`,
-          value: id,
-          disabled: this.scores.length === 3,
-          done: false,
-          active: false,
-        }
-      });
-    },
-
     setPlayerScore() {
       // VICTORY
       if (this.activePlayerScore == this.scoreSum) {
@@ -205,14 +129,29 @@ export default {
           this.$store.dispatch('addScore', {
             scoreSum: this.scoreSum,
             scores: this.scores,
-            playerId: this.activePlayerId
+            playerId: this.activePlayerId,
+            winningScore: true,
           });
 
-          this.$store.dispatch('setWinner', this.activePlayerId);
+          if (!this.tournamentMode) {
+            this.$store.dispatch('setWinner', this.activePlayerId);
+          }
 
-          this.$emit('gameFinished');
+          if (this.tournamentMode) {
+            this.$store.dispatch('setWinnerLegs', this.activePlayerId);
+          }
 
-          this.$router.push({ name: 'victory'});
+          if (this.$store.getters.winner || !this.tournamentMode) {
+            this.$emit('gameFinished');
+            this.$router.push({ name: 'victory'});
+          } else {
+            this.$store.dispatch('nextGameRound');
+          }
+
+          // reset local scores
+          this.scores = [];
+          this.scoreMultiplier = 1;
+
           return;
         } else {
           this.$refs.snackbar.show('Throw over! :-(');
@@ -306,6 +245,10 @@ export default {
 
       const scores = this.$store.state.scores;
       if (scores.length === 0) {
+        return;
+      }
+
+      if (scores[scores.length-1].winningScore) {
         return;
       }
 
