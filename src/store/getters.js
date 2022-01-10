@@ -23,11 +23,11 @@ export default {
     const scores = getters.getScoresByPlayerId(id);
 
     if (scores.length == 0) {
-      return 0;
+      return '0';
     }
 
     const result = scores.reduce((prev, cur) => ({ scoreSum: prev.scoreSum + cur.scoreSum }));
-    return Math.round(result.scoreSum / scores.length);
+    return (Math.round((result.scoreSum / scores.length) * 100) / 100).toFixed(2);
   },
 
   getHighshotsByIdAndValue: (state, getters) => (id, min, max) => {

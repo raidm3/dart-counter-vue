@@ -31,7 +31,7 @@ export default {
       required: true,
     },
     playerAverage: {
-      type: Number,
+      type: String,
       required: true,
     },
     isActive: {
