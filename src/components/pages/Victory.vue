@@ -18,7 +18,7 @@
         <span v-for="player in players" :key="player.id">
           <span>{{ player.name }}:</span>
           <span class="font-weight-bold pl-2">{{ player.score }} Points</span>
-          <br/>
+          <br />
         </span>
       </div>
 
@@ -28,7 +28,9 @@
         Game has been finished in <b>Round {{ currentRound }}</b>
       </p>
       <div v-if="activeGameType === 'Classic'" class="mb-1">
-        Best shot was <b>{{ highscore.score }}</b> from <b>{{ highscorePlayer.name }}</b>
+        Best shot <b>{{ highscore.score }}</b> from <b>{{ highscorePlayer.name }}</b>
+        <br />
+        Checkout: <b>{{ checkoutScore }}</b>
 
         <hr>
 
@@ -86,9 +88,12 @@ export default {
       return this.$store.getters.currentRound;
     },
 
+    scores() {
+      return this.$store.state.scores;
+    },
+
     highscore() {
-      const scores = this.$store.state.scores;
-      const highscore = scores.reduce((prev, cur) => {
+      const highscore = this.scores.reduce((prev, cur) => {
         const score = prev.scoreSum > cur.scoreSum ? prev : cur;
         return {
           scoreSum: score.scoreSum,
@@ -100,6 +105,10 @@ export default {
         score: highscore.scoreSum,
         playerId: highscore.playerId,
       };
+    },
+
+    checkoutScore() {
+      return this.scores[this.scores.length-1].scoreSum;
     },
 
     highscorePlayer() {
