@@ -43,113 +43,100 @@
       role="document"
     >
       <div class="modal-content">
-        <div class="modal-header">
-          <h5
-            class="modal-title"
-            id="exampleModalLabel"
-          >
-            Checkouts
-          </h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
         <div class="modal-body">
           <div class="table-responsive">
             <div class="table">
+              <thead class="d-flex justify-content-center">
+                <tr class="h5" scope="col">Checkouts</tr>
+              </thead>
               <tbody>
                 <tr>
-                  <td>61</td>
+                  <td class="font-weight-bold">61</td>
                   <td>T15</td>
                   <td>D8</td>
                   <td>&nbsp;</td>
-                  <td>71</td>
+                  <td class="font-weight-bold">71</td>
                   <td>T13</td>
                   <td>D16</td>
                 </tr>
                 <tr>
-                  <td>62</td>
+                  <td class="font-weight-bold">62</td>
                   <td>T10</td>
                   <td>D16</td>
                   <td>&nbsp;</td>
-                  <td>72</td>
+                  <td class="font-weight-bold">72</td>
                   <td>T16</td>
                   <td>D12</td>
                 </tr>
                 <tr>
-                  <td>63</td>
+                  <td class="font-weight-bold">63</td>
                   <td>T13</td>
                   <td>D12</td>
                   <td>&nbsp;</td>
-                  <td>73</td>
+                  <td class="font-weight-bold">73</td>
                   <td>T19</td>
                   <td>D8</td>
                 </tr>
                 <tr>
-                  <td>64</td>
+                  <td class="font-weight-bold">64</td>
                   <td>T16</td>
                   <td>D8</td>
                   <td>&nbsp;</td>
-                  <td>74</td>
+                  <td class="font-weight-bold">74</td>
                   <td>T14</td>
                   <td>D16</td>
                 </tr>
                 <tr>
-                  <td>65</td>
+                  <td class="font-weight-bold">65</td>
                   <td>T19</td>
                   <td>D4</td>
                   <td>&nbsp;</td>
-                  <td>75</td>
+                  <td class="font-weight-bold">75</td>
                   <td>T17</td>
                   <td>D12</td>
                 </tr>
                 <tr>
-                  <td>66</td>
+                  <td class="font-weight-bold">66</td>
                   <td>T10</td>
                   <td>D18</td>
                   <td>&nbsp;</td>
-                  <td>76</td>
+                  <td class="font-weight-bold">76</td>
                   <td>T20</td>
                   <td>D8</td>
                 </tr>
                 <tr>
-                  <td>67</td>
+                  <td class="font-weight-bold">67</td>
                   <td>T17</td>
                   <td>D8</td>
                   <td>&nbsp;</td>
-                  <td>77</td>
+                  <td class="font-weight-bold">77</td>
                   <td>T19</td>
                   <td>D10</td>
                 </tr>
                 <tr>
-                  <td>68</td>
+                  <td class="font-weight-bold">68</td>
                   <td>T20</td>
                   <td>D4</td>
                   <td>&nbsp;</td>
-                  <td>78</td>
+                  <td class="font-weight-bold">78</td>
                   <td>T18</td>
                   <td>D12</td>
                 </tr>
                 <tr>
-                  <td>69</td>
+                  <td class="font-weight-bold">69</td>
                   <td>T15</td>
                   <td>D12</td>
                   <td>&nbsp;</td>
-                  <td>79</td>
+                  <td class="font-weight-bold">79</td>
                   <td>T19</td>
                   <td>D11</td>
                 </tr>
                 <tr>
-                  <td>70</td>
+                  <td class="font-weight-bold">70</td>
                   <td>T10</td>
                   <td>D20</td>
                   <td>&nbsp;</td>
-                  <td>80</td>
+                  <td class="font-weight-bold">80</td>
                   <td>T20</td>
                   <td>D10</td>
                 </tr>
@@ -157,10 +144,10 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex justify-content-center">
           <button
             type="button"
-            class="btn btn-primary ml-auto"
+            class="btn btn-primary"
             data-dismiss="modal"
           >
             Close
