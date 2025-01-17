@@ -58,6 +58,28 @@
             </tr>
           </tbody>
         </table>
+
+        <table class="table table-borderless table-sm text-white">
+          <thead>
+            <tr class="border-bottom">
+              <th class="border-right" colspan="1" scope="col"></th>
+              <th scope="col">Match Darts</th>
+              <th scope="col">Legs</th>
+              <th scope="col">Double %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="player in players"
+              :key="player.id"
+            >
+              <th class="border-right" colspan="1" scope="row">{{ player.name }}</th>
+              <td>{{ getPlayerMatchDartsAndRatio(player.id).matchDarts }}</td>
+              <td>{{ getPlayerMatchDartsAndRatio(player.id).winningLegs }}</td>
+              <td>{{ getPlayerMatchDartsAndRatio(player.id).ratio }}%</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="mx-2">
         <button
@@ -139,6 +161,10 @@ export default {
 
     getPlayerAverage(id) {
       return this.$store.getters.getPlayerAverageById(id);
+    },
+
+    getPlayerMatchDartsAndRatio(id) {
+      return this.$store.getters.getMatchDartsAndRatio(id);
     },
 
     backToHome() {

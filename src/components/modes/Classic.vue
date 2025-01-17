@@ -17,6 +17,8 @@
 
     <ActionBar
       :currentRound="currentRound"
+      :scoreSum="scoreSum"
+      :activePlayerScore="activePlayerScore"
       @accept="setPlayerScore"
       @undo="undo"
       @scoreRecorded="onScoreRecorded"
@@ -105,7 +107,7 @@ export default {
   },
 
   methods: {
-    setPlayerScore() {
+    setPlayerScore(matchDartsCount = 0) {
       // VICTORY
       if (this.activePlayerScore == this.scoreSum) {
         if (
@@ -131,6 +133,7 @@ export default {
             scores: this.scores,
             playerId: this.activePlayerId,
             winningScore: true,
+            matchDartsCount,
           });
 
           if (!this.tournamentMode) {
@@ -161,9 +164,16 @@ export default {
       // THROW OVER
       if (this.activePlayerScore < this.scoreSum) {
         this.$refs.snackbar.show('Throw over! :-(');
+        // save score with 0
+          this.$store.dispatch('addScore', {
+            scoreSum: 0,
+            scores: [{ multiplier: 1, number: { name: '0', value: 0 } }],
+            playerId: this.activePlayerId,
+            matchDartsCount,
+          });
       }
 
-      // set player score
+      // SCORING
       if (this.activePlayerScore > this.scoreSum) {
         if (
           this.finishOption == 'doubleOut'
@@ -180,7 +190,8 @@ export default {
           this.$store.dispatch('addScore', {
             scoreSum: this.scoreSum,
             scores: this.scores,
-            playerId: this.activePlayerId
+            playerId: this.activePlayerId,
+            matchDartsCount,
           });
         }
       }

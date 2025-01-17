@@ -1,0 +1,18 @@
+{
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "babel-eslint",  // Or another JavaScript parser like @babel/eslint-parser
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "vue"
+  ],
+  "extends": [
+    // "plugin:vue/recommended",  // or "plugin:vue/recommended" for Vue 2 projects
+    // "eslint:recommended"
+  ],
+  "rules": {
+    // Your specific rules here
+  }
+}

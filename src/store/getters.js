@@ -40,6 +40,23 @@ export default {
     return scores.filter((score) => score.scoreSum >= min && score.scoreSum <= max);
   },
 
+  getMatchDartsAndRatio: (state, getters) => (id) => {
+    const scores = getters.getScoresByPlayerId(id);
+
+    if (scores.length == 0) {
+      return 'n/a';
+    }
+
+    const matchDarts = scores.reduce((prev, cur) => prev + cur.matchDartsCount, 0);
+    const winningLegs = scores.filter((s) => s.winningScore).length;
+
+    return {
+      matchDarts,
+      winningLegs,
+      ratio: (Math.round((winningLegs / matchDarts) * 100)).toFixed(1),
+    };
+  },
+
   winner: state => state.players.find(player => player.winner),
 
   numberOfPlayers: state => state.players.length,
